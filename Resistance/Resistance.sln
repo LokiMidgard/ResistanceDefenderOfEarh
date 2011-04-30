@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance", "Resistance\Resistance\Resistance.csproj", "{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ResistanceContent", "Resistance\ResistanceContent\ResistanceContent.contentproj", "{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs23
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Resistance\\Resistance\\Resistance.csproj
+		SccProjectName1 = Resistance/Resistance
+		SccLocalPath1 = Resistance\\Resistance
+		SccProjectUniqueName2 = Resistance\\ResistanceContent\\ResistanceContent.contentproj
+		SccProjectName2 = Resistance/ResistanceContent
+		SccLocalPath2 = Resistance\\ResistanceContent
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
