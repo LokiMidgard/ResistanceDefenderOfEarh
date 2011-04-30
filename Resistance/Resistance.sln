@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance", "Resistance\Re
 EndProject
 Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ResistanceContent", "Resistance\ResistanceContent\ResistanceContent.contentproj", "{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{657CEFDC-5654-45B3-967A-69FA09B8FB78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fonts", "Fonts", "{A505F96B-1CA1-4852-9245-02BFAE106818}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 3
@@ -34,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A505F96B-1CA1-4852-9245-02BFAE106818} = {657CEFDC-5654-45B3-967A-69FA09B8FB78}
 	EndGlobalSection
 EndGlobal

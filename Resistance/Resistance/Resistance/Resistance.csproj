@@ -116,8 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ResistanceContent\ResistanceContent.contentproj">
-      <Name>ResistanceContent</Name>
+      <Name>ResistanceContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
