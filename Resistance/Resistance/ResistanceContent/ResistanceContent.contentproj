@@ -227,11 +227,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\Bombshock.png">
-      <Name>Bombshock</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Animation\Enemy2Tiles.png">
       <Name>Enemy2Tiles</Name>
       <Importer>TextureImporter</Importer>
@@ -252,13 +247,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\ExplosionTiles.png">
-      <Name>ExplosionTiles</Name>
+    <Compile Include="Animation\newAlienFireBlast.png">
+      <Name>newAlienFireBlast</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\newAlienFireBlast.png">
-      <Name>newAlienFireBlast</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\ExplosionTiles.png">
+      <Name>ExplosionTiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -21,15 +21,19 @@ namespace Mitgard.Resistance.Sprite
 
         private String imageName;
 
+        public Animation currentAnnimation;
+
+        public int currentAnimationFrame;
+
 
         public Sprite(String imageName)
         {
             this.imageName = imageName;
         }
 
-        public void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
-            Game1.instance.spriteBatch.Draw(image, null, Color.White);
+            Game1.instance.spriteBatch.Draw(image, position, currentAnnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, currentAnnimation.spriteEfekt, 0f);
         }
 
         public int DrawOrder
@@ -48,23 +52,23 @@ namespace Mitgard.Resistance.Sprite
 
         public event EventHandler<EventArgs> VisibleChanged;
 
-        public void Update(GameTime gameTime)
-        {
+        public abstract void Update(GameTime gameTime);
 
-        }
-
-        public void Initilize()
+        public virtual void Initilize()
         {
             Game1.instance.LoadContent(imageName, (Texture2D t) => image = t);
         }
 
         public struct Animation
         {
-            Point leftTop;
-            int width;
-            int height;
-            int frameWidth;
-            int frameHeight;
+            public Point leftTop;
+            public int width;
+            public int height;
+            public int frameWidth;
+            public int frameHeight;
+
+            public SpriteEffects spriteEfekt;
+
             public Animation(Point leftTop, int width, int heigth, int frameWidth, int frameHeighr)
             {
                 this.leftTop = leftTop;
@@ -72,6 +76,7 @@ namespace Mitgard.Resistance.Sprite
                 this.height = heigth;
                 this.frameWidth = frameWidth;
                 this.frameHeight = frameHeighr;
+                spriteEfekt = SpriteEffects.None;
             }
             int Length { get { return width * height; } }
 
