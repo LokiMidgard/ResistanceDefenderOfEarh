@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
+using Mitgard.Resistance.Scene;
+using Mitgard.Resistance.Loading;
 
 namespace Midgard.Resistance
 {
@@ -17,13 +19,22 @@ namespace Midgard.Resistance
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+
+        public static Game1 instance;
+
+        public GraphicsDeviceManager graphics;
+        public SpriteBatch spriteBatch;
+
+        IScene actualScene;
 
         public Game1()
         {
+            instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.IsFullScreen = true;
 
 
             // Frame rate is 30 fps by default for Windows Phone.
@@ -75,7 +86,8 @@ namespace Midgard.Resistance
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            actualScene.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -88,9 +100,22 @@ namespace Midgard.Resistance
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+
+            actualScene.Draw(gameTime);
 
             base.Draw(gameTime);
+        }
+
+
+
+        public void SwitchToScene(IScene scene)
+        {
+            actualScene = scene;
+        }
+
+        public void LoadContent<T>(String name, LoadedDelegate<T> del)
+        {
+
         }
     }
 }
