@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Mitgard.Resistance.Scene
 {
-    interface IScene
+    public interface IScene
     {
 
         void Initilize();

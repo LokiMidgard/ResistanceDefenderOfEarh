@@ -5,5 +5,5 @@ using System.Text;
 
 namespace Mitgard.Resistance.Loading
 {
-    delegate void LoadedDelegate<T>(T loadedData);
+  public  delegate void LoadedDelegate<T>(T loadedData);
 }

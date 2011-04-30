@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using Mitgard.Resistance.Scene;
 using Mitgard.Resistance.Loading;
+using Mitgard.Resistance.Musicplayer;
+using System.Threading;
 
 namespace Midgard.Resistance
 {
@@ -21,6 +23,14 @@ namespace Midgard.Resistance
     {
 
         public static Game1 instance;
+
+        public SpriteFont font;
+
+        public Texture2D clearStdBackground;
+
+
+        public Queue<Action> actionList = new Queue<Action>();
+
 
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
@@ -50,7 +60,8 @@ namespace Midgard.Resistance
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SwitchToScene(new TitleScene());
             base.Initialize();
         }
 
@@ -61,8 +72,9 @@ namespace Midgard.Resistance
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            font = Content.Load<SpriteFont>("font");
+            clearStdBackground = Content.Load<Texture2D>(@"Menue\ResTitelWP7_ohneTitle");
             // TODO: use this.Content to load your game content here
         }
 
@@ -85,6 +97,8 @@ namespace Midgard.Resistance
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            MusicManager.Update(gameTime);
 
             actualScene.Update(gameTime);
 
@@ -110,11 +124,34 @@ namespace Midgard.Resistance
 
         public void SwitchToScene(IScene scene)
         {
-            actualScene = scene;
+            scene.Initilize();
+            Action a = () =>
+            {
+                actualScene = scene;
+                scene.DoneLoading();
+            };
+            if (actionList.Count > 0)
+            {
+                LoadingScene l = new LoadingScene(actionList, a);
+                actualScene = l;
+            }
+            else
+                a();
         }
+
 
         public void LoadContent<T>(String name, LoadedDelegate<T> del)
         {
+
+            System.Action a = () =>
+              {
+                  var x = Content.Load<T>(name);
+                  Thread.Sleep(500);
+                  del(x);
+              };
+
+            actionList.Enqueue(a);
+
 
         }
     }

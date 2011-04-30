@@ -2,29 +2,59 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Midgard.Resistance;
+using Microsoft.Xna.Framework;
 
 namespace Mitgard.Resistance.Scene
 {
-    class LoadingScene  :IScene
+    class LoadingScene : IScene
     {
+        private Queue<Action> actionList;
+        private Action finishAction;
+
+
+
+        public LoadingScene()
+        {
+        }
+
+
+
+        public LoadingScene(Queue<Action> actionList, Action a)
+        {
+            // TODO: Complete member initialization
+            this.actionList = actionList;
+            this.finishAction = a;
+        }
+
         public void Initilize()
         {
-            throw new NotImplementedException();
+
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            throw new NotImplementedException();
+            if (actionList.Count != 0)
+            {
+                var action = actionList.Dequeue();
+                action();
+                if (actionList.Count == 0)
+                    finishAction();
+            }
+
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            throw new NotImplementedException();
+            Game1.instance.spriteBatch.Begin();
+            Game1.instance.spriteBatch.Draw(Game1.instance.clearStdBackground, Vector2.Zero, Color.White);
+            Game1.instance.spriteBatch.DrawString(Game1.instance.font, actionList.Count.ToString(), Vector2.Zero, Color.White);
+            Game1.instance.spriteBatch.End();
         }
 
         public void DoneLoading()
         {
-            throw new NotImplementedException();
         }
     }
 }
