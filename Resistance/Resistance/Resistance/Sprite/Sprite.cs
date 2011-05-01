@@ -43,8 +43,9 @@ namespace Mitgard.Resistance.Sprite
 
         public virtual void Draw(GameTime gameTime)
         {
-            Game1.instance.spriteBatch.Draw(image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
-            Visible = true;
+            if (Visible)
+                Game1.instance.spriteBatch.Draw(image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+
         }
 
         public int DrawOrder
@@ -67,6 +68,7 @@ namespace Mitgard.Resistance.Sprite
 
         public virtual void Initilize()
         {
+            Visible = true;
             Game1.instance.LoadContent(imageName, (Texture2D t) => image = t);
         }
 
@@ -183,7 +185,7 @@ namespace Mitgard.Resistance.Sprite
 
 
         }
-    
+
     }
 
     public enum Direction

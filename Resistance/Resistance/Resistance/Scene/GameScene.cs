@@ -33,6 +33,9 @@ namespace Mitgard.Resistance.Scene
         public List<AbstractEnemy> enemys = new List<AbstractEnemy>();
         public List<Human> humans = new List<Human>();
         public int score;
+        public int difficulty;
+        public bool enemyTargetting = false;
+        public float EnemyShotSpeed = 45;
 
         public GameScene()
         {
@@ -46,6 +49,7 @@ namespace Mitgard.Resistance.Scene
             for (int i = 0; i < 100; i++)
             {
                 enemys.Add(new EnemyCollector(this));
+                enemys.Add(new EnemyPredator(this));
             }
             background = new DesertBackground(this);
 

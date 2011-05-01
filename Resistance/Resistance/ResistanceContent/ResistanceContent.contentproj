@@ -215,13 +215,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\Enemy1.png">
-      <Name>Enemy1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Animation\AlienFireBlastTiles.png">
       <Name>AlienFireBlastTiles</Name>
       <Importer>TextureImporter</Importer>
@@ -325,6 +318,35 @@
       <Name>shotORIGINAL</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Point.bmp">
+      <Name>Point</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\Enemy1Tiles.png">
+      <Name>Enemy1Tiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Animation\Enemy2Tiles.png">
+      <Name>Enemy2Tiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Animation\Enemy3Tiles.png">
+      <Name>Enemy3Tiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Animation\Enemy4Tiles.png">
+      <Name>Enemy4Tiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

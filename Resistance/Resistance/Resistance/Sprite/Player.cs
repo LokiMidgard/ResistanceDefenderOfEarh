@@ -28,11 +28,15 @@ namespace Mitgard.Resistance.Sprite
 
         const float SPEED = 64f;
 
+        int lifePoints;
+
+ public        Vector2 movment;
+
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
         {
             origion = new Vector2(24, 12);
-
+            collisonRec = new Rectangle(-24, -12, 48, 24);
             allShots = new Shot[SHOT_COUNT];
 
             for (int i = 0; i < allShots.Length; i++)
@@ -75,7 +79,7 @@ namespace Mitgard.Resistance.Sprite
                 frameTime -= animationSpeed;
             }
 
-            Vector2 movment = new Vector2();
+             movment = new Vector2();
 
             if (input.Down == AbstractInput.Type.Hold)
                 movment += new Vector2(0, 2);
@@ -136,7 +140,7 @@ namespace Mitgard.Resistance.Sprite
         public override void Initilize()
         {
             base.Initilize();
-            currentAnimation = FLY_RIGHT;
+           currentAnimation = FLY_RIGHT;
 
             Game1.instance.LoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
 
@@ -178,7 +182,13 @@ namespace Mitgard.Resistance.Sprite
                 : base(@"Animation\FireBlastTiles", player.scene)
             {
                 this.player = player;
+                currentAnimation = FLY;
+            }
 
+            public override void Initilize()
+            {
+                base.Initilize();
+                Visible = false;
             }
 
             public void Fire(float playerSpeed, Direction playerDirection, Vector2 position)
@@ -305,5 +315,12 @@ namespace Mitgard.Resistance.Sprite
         }
 
 
+
+        public  void Hit()
+        {
+            --lifePoints;
+            if (lifePoints <= 0)
+                Game1.instance.SwitchToScene(new GameOverScene());
+        }
     }
 }
