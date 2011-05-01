@@ -16,8 +16,7 @@ namespace Mitgard.Resistance.Sprite
     {
 
         const int SHOT_COUNT = 10;
-
-        Shot[] allShots;
+        public Shot[] allShots;
 
         System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
 
@@ -26,6 +25,8 @@ namespace Mitgard.Resistance.Sprite
         double frameTime;
 
         const double animationSpeed = 0.05f;
+
+        const float SPEED = 64f;
 
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
@@ -96,7 +97,7 @@ namespace Mitgard.Resistance.Sprite
                 else if (input.Right == AbstractInput.Type.Press)
                     currentAnimation = TURN_RIGHT;
             }
-            movment *= 48;
+            movment *= SPEED;
             if (input.Fire == AbstractInput.Type.Press && currentAnimation != TURN_LEFT && currentAnimation != TURN_RIGHT)
             {
                 Fire(movment.X);
@@ -150,7 +151,7 @@ namespace Mitgard.Resistance.Sprite
         public static readonly Animation TURN_RIGHT = new Animation(new Point(0, 3 * 24), 6, 3, 48, 24);
         public static readonly Animation TURN_LEFT = new Animation(Point.Zero, 6, 3, 48, 24);
 
-        class Shot : Sprite
+        public  class Shot : Sprite
         {
 
 
@@ -302,5 +303,7 @@ namespace Mitgard.Resistance.Sprite
             }
 
         }
+
+
     }
 }

@@ -6,6 +6,7 @@ using Mitgard.Resistance.Input;
 using Mitgard.Resistance.Sprite;
 using Midgard.Resistance;
 using Microsoft.Xna.Framework;
+using Mitgard.Resistance.LevelBackground;
 
 namespace Mitgard.Resistance.Scene
 {
@@ -15,7 +16,12 @@ namespace Mitgard.Resistance.Scene
         public const int WORLD_WIDTH = 4000;
         public const int WORLD_HEIGHT = 480;
 
+        public const int VIEWPORT_WIDTH = 800;
+        public const int VIEWPORT_HEIGHT = 480;
 
+
+
+        DesertBackground background;
 
 
         public Vector2 ViewPort;
@@ -41,6 +47,7 @@ namespace Mitgard.Resistance.Scene
             {
                 enemys.Add(new EnemyCollector(this));
             }
+            background = new DesertBackground(this);
 
         }
 
@@ -58,13 +65,19 @@ namespace Mitgard.Resistance.Scene
             input.Initilize();
 
             player.Initilize();
+            background.Initilize();
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             if (humans.Count == 0)
             {
-                Game1.instance.SwitchToScene(new GameOverScene());
+                GameOver();
+                return;
+            }
+            if (enemys.Count == 0)
+            {
+                NextLevel();
                 return;
             }
 
@@ -91,13 +104,95 @@ namespace Mitgard.Resistance.Scene
 
             player.Update(gameTime);
 
-            ViewPort = (player.position * new Vector2(1, 0)) - new Vector2(400, 0);
+            MoveEveryThing();
+
+
+            background.Update(gameTime);
+        }
+
+        private void MoveEveryThing()
+        {
+            if (player.position.X < 0)
+            {
+                player.position.X += WORLD_WIDTH;
+            }
+            else if (player.position.X > WORLD_WIDTH)
+            {
+                player.position.X -= WORLD_WIDTH;
+            }
+
+            ViewPort = (player.position * new Vector2(1, 1)) - new Vector2(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2);
+            ViewPort.Y = MathHelper.Clamp(ViewPort.Y, 0, WORLD_HEIGHT - VIEWPORT_HEIGHT);
+
+            foreach (var s in enemys)
+            {
+                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                {
+                    s.position.X += WORLD_WIDTH;
+                }
+                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                {
+                    s.position.X -= WORLD_WIDTH;
+                }
+            }
+
+
+            foreach (var s in player.allShots)
+            {
+
+                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                {
+                    s.position.X += WORLD_WIDTH;
+
+
+                }
+                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                {
+                    s.position.X -= WORLD_WIDTH;
+
+
+                }
+            }
+            foreach (var s in humans)
+            {
+
+                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                {
+                    s.position.X += WORLD_WIDTH;
+
+
+                }
+                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                {
+                    s.position.X -= WORLD_WIDTH;
+
+
+                }
+            }
+
+
+
+
+
+        }
+
+        private void NextLevel()
+        {
+            Game1.instance.SwitchToScene(new GameOverScene());
+        }
+
+        private static void GameOver()
+        {
+            Game1.instance.SwitchToScene(new GameOverScene());
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             var batch = Game1.instance.spriteBatch;
             batch.Begin();
+
+            background.Draw(gameTime);
+
             player.Draw(gameTime);
 
 
@@ -112,11 +207,23 @@ namespace Mitgard.Resistance.Scene
 
             input.Draw(gameTime);
 
+            batch.DrawString(Game1.instance.font, score.ToString(), Vector2.Zero, Color.Green);
+
             batch.End();
         }
 
         public void DoneLoading()
         {
+
+        }
+
+
+
+        public class Serelizer
+        {
+
+
+
 
         }
     }

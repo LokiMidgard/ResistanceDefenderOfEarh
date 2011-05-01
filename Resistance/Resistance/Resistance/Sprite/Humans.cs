@@ -127,7 +127,7 @@ namespace Mitgard.Resistance.Sprite
 
 
             }
-            position += (movment *16* (float)gameTime.ElapsedGameTime.TotalSeconds);
+            position += (movment * 16 * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
         }
 

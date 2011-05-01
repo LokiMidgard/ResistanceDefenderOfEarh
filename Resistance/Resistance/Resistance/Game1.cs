@@ -13,6 +13,7 @@ using Mitgard.Resistance.Scene;
 using Mitgard.Resistance.Loading;
 using Mitgard.Resistance.Musicplayer;
 using System.Threading;
+using Microsoft.Phone.Shell;
 
 namespace Midgard.Resistance
 {
@@ -50,9 +51,22 @@ namespace Midgard.Resistance
 
             graphics.IsFullScreen = true;
 
+            PhoneApplicationService.Current.Activated += new EventHandler<ActivatedEventArgs>(Current_Activated);
+            PhoneApplicationService.Current.Deactivated += new EventHandler<DeactivatedEventArgs>(Current_Deactivated);
+
 
             // Frame rate is 30 fps by default for Windows Phone.
             TargetElapsedTime = TimeSpan.FromTicks(333333);
+        }
+
+        void Current_Deactivated(object sender, DeactivatedEventArgs e)
+        {
+
+        }
+
+        void Current_Activated(object sender, ActivatedEventArgs e)
+        {
+
         }
 
         /// <summary>

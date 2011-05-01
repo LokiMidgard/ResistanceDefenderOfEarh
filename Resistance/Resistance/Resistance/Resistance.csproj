@@ -77,9 +77,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
     <Reference Include="System.Core">
       <Private>False</Private>
     </Reference>
@@ -95,6 +93,7 @@
     <Compile Include="Components\IDrawableComponent.cs" />
     <Compile Include="Input\AbstractInput.cs" />
     <Compile Include="Input\GameInput.cs" />
+    <Compile Include="LevelBackground\DesertBackground.cs" />
     <Compile Include="Loading\ContentLoader.cs" />
     <Compile Include="Loading\LoadedDelegate.cs" />
     <Compile Include="Musicplayer\MusicManager.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="Scene\LoadingScene.cs" />
     <Compile Include="Scene\TitleScene.cs" />
     <Compile Include="Sprite\AbstractEnemy.cs" />
+    <Compile Include="Sprite\City.cs" />
     <Compile Include="Sprite\EnemyCollector.cs" />
     <Compile Include="Sprite\Humans.cs" />
     <Compile Include="Sprite\Player.cs" />
