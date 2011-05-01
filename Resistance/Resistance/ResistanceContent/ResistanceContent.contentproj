@@ -328,8 +328,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\Enemy1Tiles.png">
-      <Name>Enemy1Tiles</Name>
+    <Compile Include="Animation\Enemy1.png">
+      <Name>Enemy1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
