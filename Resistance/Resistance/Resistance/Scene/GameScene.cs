@@ -19,9 +19,9 @@ namespace Mitgard.Resistance.Scene
         public const int VIEWPORT_WIDTH = 800;
         public const int VIEWPORT_HEIGHT = 480;
 
-        public const float SHOTSPEED_NORMAL = 1f;
-        public const float SHOTSPEED_FAST = 2f;
-        public const float SHOTSPEED_SLOW = 0.5f;
+        public const float SHOTSPEED_NORMAL = 48f;
+        public const float SHOTSPEED_FAST = 64f;
+        public const float SHOTSPEED_SLOW = 24f;
 
 
         DesertBackground background;

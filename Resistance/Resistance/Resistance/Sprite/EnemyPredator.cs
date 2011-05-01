@@ -178,7 +178,7 @@ namespace Mitgard.Resistance.Sprite
 
                     var newPlayerPosition = player.position + (i * mov);
 
-                    target = position - newPlayerPosition;
+                    target = newPlayerPosition - position;
                     if (target.LengthSquared() <= scene.EnemyShotSpeed * i * scene.EnemyShotSpeed * i)
                         goto targetin;
 
