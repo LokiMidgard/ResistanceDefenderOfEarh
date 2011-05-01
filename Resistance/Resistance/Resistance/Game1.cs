@@ -22,6 +22,8 @@ namespace Midgard.Resistance
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        public static readonly Random random = new Random();
+
         public static Game1 instance;
 
         public SpriteFont font;
@@ -163,19 +165,27 @@ namespace Midgard.Resistance
         }
 
 
+        Dictionary<String, object> loaded = new Dictionary<string, object>();
+
         public void LoadContent<T>(String name, LoadedDelegate<T> del)
         {
 
             System.Action a = () =>
               {
-                  var x = Content.Load<T>(name);
-                  Thread.Sleep(500);
-                  del(x);
+                  if (!loaded.ContainsKey(name))
+                  {
+                      var x = Content.Load<T>(name);
+                      loaded.Add(name, x);
+                  }
+                  //Thread.Sleep(500);
+                  del((T)loaded[name]);
               };
 
             actionList.Enqueue(a);
 
 
         }
+
+
     }
 }

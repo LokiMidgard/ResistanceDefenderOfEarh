@@ -15,6 +15,7 @@ namespace Mitgard.Resistance.Sprite
 
         public Texture2D image;
 
+
         public Vector2 position;
 
         public Vector2 origion;
@@ -25,7 +26,7 @@ namespace Mitgard.Resistance.Sprite
 
         private String imageName;
 
-        public Animation currentAnnimation;
+        public Animation currentAnimation;
 
         public int currentAnimationFrame;
 
@@ -42,7 +43,8 @@ namespace Mitgard.Resistance.Sprite
 
         public virtual void Draw(GameTime gameTime)
         {
-            Game1.instance.spriteBatch.Draw(image, position - scene.ViewPort, currentAnnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+            Game1.instance.spriteBatch.Draw(image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+            Visible = true;
         }
 
         public int DrawOrder
@@ -172,7 +174,7 @@ namespace Mitgard.Resistance.Sprite
     {
         None,
         Left,
-        Right   
+        Right
 
     }
 }

@@ -215,8 +215,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\Enemy1Tiles.png">
-      <Name>Enemy1Tiles</Name>
+    <Compile Include="Animation\Enemy1.png">
+      <Name>Enemy1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -227,18 +227,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\Enemy2Tiles.png">
-      <Name>Enemy2Tiles</Name>
+    <Compile Include="Animation\Enemy2.png">
+      <Name>Enemy2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\Enemy3Tiles.png">
-      <Name>Enemy3Tiles</Name>
+    <Compile Include="Animation\Enemy3.png">
+      <Name>Enemy3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Animation\Enemy4Tiles.png">
-      <Name>Enemy4Tiles</Name>
+    <Compile Include="Animation\Enemy4.png">
+      <Name>Enemy4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -293,6 +293,38 @@
       <Name>NewManTiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\blast.wav">
+      <Name>blast</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\explode.wav">
+      <Name>explode</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\scream.wav">
+      <Name>scream</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\shot.wav">
+      <Name>shot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\shot2.wav">
+      <Name>shot2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\shotORIGINAL.wav">
+      <Name>shotORIGINAL</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

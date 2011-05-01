@@ -7,10 +7,12 @@ using Mitgard.Resistance.Input;
 using Mitgard.Resistance.Scene;
 using Mitgard.Resistance.Components;
 using Microsoft.Xna.Framework.Graphics;
+using Midgard.Resistance;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Mitgard.Resistance.Sprite
 {
- public    class Player : Sprite
+    public class Player : Sprite
     {
 
         const int SHOT_COUNT = 10;
@@ -19,13 +21,14 @@ namespace Mitgard.Resistance.Sprite
 
         System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
 
+        SoundEffect shoot;
 
         double frameTime;
 
         const double animationSpeed = 0.05f;
 
         public Player(GameScene scene)
-            : base(@"Animation\SmallShipTiles",scene)
+            : base(@"Animation\SmallShipTiles", scene)
         {
             origion = new Vector2(24, 12);
 
@@ -48,22 +51,22 @@ namespace Mitgard.Resistance.Sprite
             while (frameTime > animationSpeed)
             {
 
-                if (currentAnnimation == TURN_LEFT)
+                if (currentAnimation == TURN_LEFT)
                 {
                     ++currentAnimationFrame;
-                    if (currentAnimationFrame >= currentAnnimation.Length)
+                    if (currentAnimationFrame >= currentAnimation.Length)
                     {
-                        currentAnnimation = FLY_Left;
+                        currentAnimation = FLY_Left;
                         currentAnimationFrame = 0;
                     }
 
                 }
-                else if (currentAnnimation == TURN_RIGHT)
+                else if (currentAnimation == TURN_RIGHT)
                 {
                     ++currentAnimationFrame;
-                    if (currentAnimationFrame >= currentAnnimation.Length)
+                    if (currentAnimationFrame >= currentAnimation.Length)
                     {
-                        currentAnnimation = FLY_RIGHT;
+                        currentAnimation = FLY_RIGHT;
                         currentAnimationFrame = 0;
                     }
                 }
@@ -77,24 +80,24 @@ namespace Mitgard.Resistance.Sprite
                 movment += new Vector2(0, 2);
             if (input.Up == AbstractInput.Type.Hold)
                 movment += new Vector2(0, -2);
-            if (currentAnnimation == FLY_RIGHT)
+            if (currentAnimation == FLY_RIGHT)
             {
                 movment += new Vector2(1, 0);
                 if (input.Right == AbstractInput.Type.Hold)
                     movment += new Vector2(2, 0);
                 else if (input.Left == AbstractInput.Type.Press)
-                    currentAnnimation = TURN_LEFT;
+                    currentAnimation = TURN_LEFT;
             }
-            else if (currentAnnimation == FLY_Left)
+            else if (currentAnimation == FLY_Left)
             {
                 movment += new Vector2(-1, 0);
                 if (input.Left == AbstractInput.Type.Hold)
                     movment += new Vector2(-2, 0);
                 else if (input.Right == AbstractInput.Type.Press)
-                    currentAnnimation = TURN_RIGHT;
+                    currentAnimation = TURN_RIGHT;
             }
             movment *= 48;
-            if (input.Fire == AbstractInput.Type.Press && currentAnnimation != TURN_LEFT && currentAnnimation != TURN_RIGHT)
+            if (input.Fire == AbstractInput.Type.Press && currentAnimation != TURN_LEFT && currentAnimation != TURN_RIGHT)
             {
                 Fire(movment.X);
             }
@@ -125,13 +128,17 @@ namespace Mitgard.Resistance.Sprite
             int i = indicis.First().Key;
             indicis.Remove(i);
             Shot s = allShots[i];
-            s.Fire(speed, currentAnnimation == FLY_Left ? Direction.Left : Direction.Right, position);
+            s.Fire(speed, currentAnimation == FLY_Left ? Direction.Left : Direction.Right, position);
+            shoot.Play();
         }
 
         public override void Initilize()
         {
             base.Initilize();
-            currentAnnimation = FLY_RIGHT;
+            currentAnimation = FLY_RIGHT;
+
+            Game1.instance.LoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
+
             foreach (var shot in allShots)
             {
                 shot.Initilize();
@@ -161,13 +168,13 @@ namespace Mitgard.Resistance.Sprite
 
             Player player;
 
-            private  readonly Animation CREATE = new Animation(Point.Zero, 4, 2, 160, 8);
-            private  readonly Animation FLY = new Animation(new Point(0, 8), 1, 1, 160, 8);
-            private  readonly Animation DIE = new Animation(new Point(0, 8), 4, 2, 160, 8);
+            private readonly Animation CREATE = new Animation(Point.Zero, 4, 2, 160, 8);
+            private readonly Animation FLY = new Animation(new Point(0, 8), 1, 1, 160, 8);
+            private readonly Animation DIE = new Animation(new Point(0, 8), 4, 2, 160, 8);
 
 
             public Shot(Player player)
-                : base(@"Animation\FireBlastTiles",player.scene)
+                : base(@"Animation\FireBlastTiles", player.scene)
             {
                 this.player = player;
 
@@ -181,19 +188,21 @@ namespace Mitgard.Resistance.Sprite
                 {
                     case Direction.Left:
                         speed = playerSpeed - SPEED;
-                        origion = new Vector2(0,4);
+                        origion = new Vector2(0, 4);
                         spriteEfekt = SpriteEffects.FlipHorizontally;
+                        collisonRec = new Rectangle(-2, -2, 8, 4);
                         break;
                     case Direction.Right:
                         speed = playerSpeed + SPEED;
-                        origion = new Vector2(160,4);
+                        origion = new Vector2(160, 4);
+                        collisonRec = new Rectangle(-6, -2, 8, 4);
                         spriteEfekt = SpriteEffects.None;
                         break;
                 }
                 Visible = true;
                 currentAnimationFrame = 0;
                 lifetime = 0;
-                currentAnnimation = CREATE;
+                currentAnimation = CREATE;
             }
 
 
@@ -201,7 +210,7 @@ namespace Mitgard.Resistance.Sprite
 
             private void Die()
             {
-                currentAnnimation = DIE;
+                currentAnimation = DIE;
                 currentAnimationFrame = 0;
                 //int frame = getFrame();
                 //int seqLength = getFrameSequenceLength();
@@ -222,7 +231,7 @@ namespace Mitgard.Resistance.Sprite
 
                 lifetime += gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (lifetime > SHOT_LIFETIME && currentAnnimation != DIE)
+                if (lifetime > SHOT_LIFETIME && currentAnimation != DIE)
                 {
                     Die();
                 }
@@ -231,16 +240,16 @@ namespace Mitgard.Resistance.Sprite
 
                 while (frameTime > animationSpeed)
                 {
-                    if (currentAnnimation == CREATE)
+                    if (currentAnimation == CREATE)
                     {
                         ++currentAnimationFrame;
                         if (currentAnimationFrame > 5)
                         {
                             currentAnimationFrame = 0;
-                            currentAnnimation = FLY;
+                            currentAnimation = FLY;
                         }
                     }
-                    else if (currentAnnimation == DIE)
+                    else if (currentAnimation == DIE)
                     {
                         ++currentAnimationFrame;
                         if (currentAnimationFrame > 6)
@@ -255,30 +264,32 @@ namespace Mitgard.Resistance.Sprite
                 }
 
 
-
-
-                var enemys = player.scene.enemys;
-                foreach (var e in enemys)
+                if (currentAnimation != DIE)
                 {
-                    if (ColideWith(e) && !e.Dead
-                        && ((direction == Direction.Right && e.position.X >= tmp.X)
-                            || (direction == Direction.Left && e.position.X <= tmp.X)))
+
+                    var enemys = player.scene.enemys;
+                    foreach (var e in enemys)
                     {
-                        e.Destroy();
-                        Die();
-                        break;
+                        if (ColideWith(e) && !e.Dead
+                            && ((direction == Direction.Right && e.position.X >= tmp.X)
+                                || (direction == Direction.Left && e.position.X <= tmp.X)))
+                        {
+                            e.Destroy();
+                            Die();
+                            break;
+                        }
                     }
-                }
-                var humans = player.scene.humans;
-                foreach (var h in humans)
-                {
-                    if (ColideWith(h)
-                        && ((direction == Direction.Right && h.position.X >= tmp.X)
-                            || (direction == Direction.Left && h.position.X <= tmp.X)))
+                    var humans = player.scene.humans;
+                    foreach (var h in humans)
                     {
-                        h.Die();
-                        Die();
-                        break;
+                        if (ColideWith(h)
+                            && ((direction == Direction.Right && h.position.X >= tmp.X)
+                                || (direction == Direction.Left && h.position.X <= tmp.X)))
+                        {
+                            h.Die();
+                            Die();
+                            break;
+                        }
                     }
                 }
             }

@@ -23,24 +23,25 @@ namespace Mitgard.Resistance.Scene
 
         public LoadingScene(Queue<Action> actionList, Action a)
         {
-            // TODO: Complete member initialization
             this.actionList = actionList;
             this.finishAction = a;
         }
 
         public void Initilize()
         {
-
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (actionList.Count != 0)
+            for (int i = 0; i < 20 && actionList.Count != 0; i++)
             {
                 var action = actionList.Dequeue();
                 action();
                 if (actionList.Count == 0)
+                {
                     finishAction();
+
+                }
             }
 
         }

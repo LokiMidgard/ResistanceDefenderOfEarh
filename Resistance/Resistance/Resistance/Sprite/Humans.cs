@@ -3,104 +3,140 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Mitgard.Resistance.Scene;
+using Microsoft.Xna.Framework;
+using Midgard.Resistance;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Mitgard.Resistance.Sprite
 {
- public    class Humans       :Sprite
+    public class Human : Sprite
     {
 
-     public EnemyCollector isCapturedBy;
-  
-    Direction direction = 0;
+        public EnemyCollector isCapturedBy;
+
+        private static bool soundLoaded;
+
+        public bool IsCaptured { get { return isCapturedBy != null; } }
+
+        Direction direction;
+
+        public static SoundEffect screem;
+
+        double frameTime;
+        const double animationSpeed = 0.05f;
+
+        public static readonly Animation WALK = new Animation(Point.Zero, 2, 2, 24, 24);
+        public static readonly Animation STAND = new Animation(Point.Zero, 1, 1, 24, 24);
 
 
-        public Humans(GameScene scene):base("",scene)
+        public Human(GameScene scene)
+            : base(@"Animation\NewManTiles", scene)
         {
-
+            origion = new Vector2(12, 0);
+            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
+            collisonRec = new Rectangle(-12, -12, 24, 24);
         }
+
+        public override void Initilize()
+        {
+            base.Initilize();
+            currentAnimation = STAND;
+            direction = Direction.None;
+            if (!soundLoaded)
+            {
+                Game1.instance.LoadContent(@"Sound\scream", (SoundEffect s) => screem = s);
+                soundLoaded = true;
+            }
+        }
+
         internal void Die()
         {
-            throw new NotImplementedException();
+            scene.humans.Remove(this);
+            if (IsCaptured)
+            {
+                isCapturedBy.target = null;
+            }
+            scene.score -= 25;
+            screem.Play();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            throw new NotImplementedException();
-        }
+            Vector2 movment = new Vector2();
+            if (IsCaptured)
+            {
+                currentAnimation = STAND;
+                direction = Direction.None;
+                currentAnimationFrame = 0;
+                position = new Vector2(isCapturedBy.position.X, Math.Min(GameScene.WORLD_WIDTH - 24, isCapturedBy.position.Y));
+            }
+            else if (position.Y < GameScene.WORLD_HEIGHT - 24)
+            {
+                movment += new Vector2(0, 1);
+            }
+            else
+            {
+                int newDirection = Game1.random.Next(40);
+                if (newDirection < 3 && direction != (Direction)newDirection)
+                {
+                    direction = (Direction)newDirection;
+                    switch (direction)
+                    {
+                        case Direction.None:
+                            currentAnimation = STAND;
+                            currentAnimationFrame = 0;
+                            break;
+                        case Direction.Right:
+                            currentAnimation = WALK;
+                            currentAnimationFrame = 0;
+                            spriteEfekt = Microsoft.Xna.Framework.Graphics.SpriteEffects.None;
+                            break;
+                        case Direction.Left:
+                            currentAnimation = WALK;
+                            spriteEfekt = Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally;
+                            currentAnimationFrame = 0;
+                            break;
+                    }
+                }
 
+                switch (direction)
+                {
 
-
-
-
-
-
-
-     
-
-    
-  
-    public Human() {
-        defineReferencePixel(getWidth() >> 1, 0);
-        setRefPixelPosition(StaticFields.getRandom().nextInt(StaticFields.WORLD_WIDTH), StaticFields.WORLD_HEIGHT - getHeight());
-        setVisible(true);
-    }
-
-    public boolean isCaptured() {
-        return (isCapturedBy != null);
-    }
-
-    public void die() {
-        StaticFields.currentLevel.removeHuman(this);
-        if(isCaptured())
-        {
-            isCapturedBy.target=null;
-        }
-        StaticFields.score -= 25;
-        StaticFields.getSound().playSFX("scream", 50);
-    }
-
-    public void tick(int keyState) {
-        if (isCapturedBy != null) {
-            setFrameSequence(StaticFields.getSpriteDesinger().NewManStand);
-            setRefPixelPosition(isCapturedBy.getRefPixelX(), Math.min(
-                    StaticFields.WORLD_HEIGHT - getHeight(),
-                    isCapturedBy.getY() + isCapturedBy.getHeight()));
-        } else if (getRefPixelY() < StaticFields.WORLD_HEIGHT - getHeight()) {
-            move(0, 1);
-        } else {
-            int newDirection = StaticFields.getRandom().nextInt(40);
-            if (newDirection < 3 && direction != newDirection) {
-                direction = newDirection;
-                switch (direction) {
-                    case STAND_STILL:
-                        setFrameSequence(StaticFields.getSpriteDesinger().NewManStand);
+                    case Direction.Right:
+                        movment += new Vector2(1, 0);
                         break;
-                    case WALK_RIGHT:
-                        setFrameSequence(StaticFields.getSpriteDesinger().NewManWalk);
-                        setTransform(TRANS_NONE);
-                        break;
-                    case WALK_LEFT:
-                        setFrameSequence(StaticFields.getSpriteDesinger().NewManWalk);
-                        setTransform(TRANS_MIRROR);
+                    case Direction.Left:
+                        movment -= new Vector2(1, 0);
                         break;
                 }
+
+
+                frameTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+                while (frameTime > animationSpeed)
+                {
+                    ++currentAnimationFrame;
+                    if (currentAnimationFrame >= currentAnimation.Length)
+                    {
+                        currentAnimationFrame = 1;
+                    }
+
+                    frameTime -= animationSpeed;
+                }
+
+
+
             }
-            switch (direction) {
-                case STAND_STILL:
-                    setFrame(0);
-                    break;
-                case WALK_RIGHT:
-                    move(1, 0);
-                    nextFrame();
-                    break;
-                case WALK_LEFT:
-                    move(-1, 0);
-                    nextFrame();
-                    break;
-            }
+            position += (movment *16* (float)gameTime.ElapsedGameTime.TotalSeconds);
 
         }
-    }
+
+
+
+
+
+
+
 
     }
 }
