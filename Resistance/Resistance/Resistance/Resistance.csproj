@@ -99,6 +99,7 @@
     <Compile Include="Loading\LoadedDelegate.cs" />
     <Compile Include="Musicplayer\MusicManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scene\GameOverScene.cs" />
     <Compile Include="Scene\GameScene.cs" />
     <Compile Include="Scene\HavyLoadingScene.cs" />
     <Compile Include="Scene\IScene.cs" />

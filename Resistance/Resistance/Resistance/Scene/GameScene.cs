@@ -62,7 +62,11 @@ namespace Mitgard.Resistance.Scene
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-           
+            if (humans.Count == 0)
+            {
+                Game1.instance.SwitchToScene(new GameOverScene());
+                return;
+            }
 
             input.Update(gameTime);
 
@@ -83,7 +87,7 @@ namespace Mitgard.Resistance.Scene
                 enemys.Remove(e);
             }
 
-            
+
 
             player.Update(gameTime);
 
@@ -100,7 +104,7 @@ namespace Mitgard.Resistance.Scene
             foreach (var h in humans)
             {
                 h.Draw(gameTime);
-            } 
+            }
             foreach (var h in enemys)
             {
                 h.Draw(gameTime);
