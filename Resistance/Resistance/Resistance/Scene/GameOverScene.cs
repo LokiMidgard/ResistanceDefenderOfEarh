@@ -10,7 +10,19 @@ namespace Mitgard.Resistance.Scene
 {
     class GameOverScene : IScene
     {
+
+
+
+        
+
         Texture2D texture;
+        private int score;
+
+        public GameOverScene(int score)
+        {
+            // TODO: Complete member initialization
+            this.score = score;
+        }
         public void Initilize()
         {
             Game1.instance.LoadContent(@"Menue\ResTitelWP7_ohneGuy", (Texture2D t) => texture = t);
@@ -25,6 +37,8 @@ namespace Mitgard.Resistance.Scene
 
             Game1.instance.spriteBatch.Begin();
             Game1.instance.spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            Game1.instance.spriteBatch.DrawString(Game1.instance.font, score.ToString(),new Vector2(240,400), Color.White);
+            
             Game1.instance.spriteBatch.End();
         }
 

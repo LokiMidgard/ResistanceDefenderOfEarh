@@ -26,7 +26,7 @@ namespace Mitgard.Resistance.Sprite
         private const int RECHTSUNTEN = 7;
 
 
-        private Shot[] shots;
+        public Shot[] shots;
         System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
 
 
@@ -151,7 +151,7 @@ namespace Mitgard.Resistance.Sprite
 
             position += movment * (float)gameTime.ElapsedGameTime.TotalSeconds * SPEED;
 
-            if (Game1.random.Next((3 - scene.difficulty) << 5) < 1)
+            if (Game1.random.Next((3 - (int)scene.difficulty) << 5) < 1)
             {
                 fire();
             }
@@ -173,7 +173,7 @@ namespace Mitgard.Resistance.Sprite
                 for (float i = 0; i < 6f; i += 0.3f)
                 {
 
-                  
+
                     var mov = player.movment;
 
                     var newPlayerPosition = player.position + (i * mov);
@@ -260,6 +260,8 @@ namespace Mitgard.Resistance.Sprite
 
             public override void Update(GameTime gameTime)
             {
+                if (!Visible)
+                    return;
                 if ((position.Y < 0 && movment.Y <= 0) || (position.Y > GameScene.WORLD_HEIGHT && movment.Y >= 0))
                 {
                     die();

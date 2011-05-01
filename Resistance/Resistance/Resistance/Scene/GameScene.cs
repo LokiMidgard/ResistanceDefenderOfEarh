@@ -19,10 +19,14 @@ namespace Mitgard.Resistance.Scene
         public const int VIEWPORT_WIDTH = 800;
         public const int VIEWPORT_HEIGHT = 480;
 
+        public const float SHOTSPEED_NORMAL = 1f;
+        public const float SHOTSPEED_FAST = 2f;
+        public const float SHOTSPEED_SLOW = 0.5f;
 
 
         DesertBackground background;
 
+        Hud hud;
 
         public Vector2 ViewPort;
 
@@ -33,26 +37,83 @@ namespace Mitgard.Resistance.Scene
         public List<AbstractEnemy> enemys = new List<AbstractEnemy>();
         public List<Human> humans = new List<Human>();
         public int score;
-        public int difficulty;
+        public Dificulty difficulty;
         public bool enemyTargetting = false;
         public float EnemyShotSpeed = 45;
+        public int level;
+        public int noHumans;
+        public int noPredetor;
+        public int noCollector;
 
-        public GameScene()
+        public GameScene(Dificulty dificulty)
         {
+            this.difficulty = dificulty;
             player = new Player(this);
             input = new GameInput();
 
-            for (int i = 0; i < 100; i++)
-            {
-                humans.Add(new Human(this));
-            }
-            for (int i = 0; i < 100; i++)
-            {
-                enemys.Add(new EnemyCollector(this));
-                enemys.Add(new EnemyPredator(this));
-            }
             background = new DesertBackground(this);
+            hud = new Hud(this);
 
+            switch (difficulty)
+            {
+                case Dificulty.Easy:
+                    this.noHumans = 20;
+                    this.noPredetor = 0;
+                    this.noCollector = 5;
+                    //this.noMine = 0;
+                    enemyTargetting = false;
+                    EnemyShotSpeed = SHOTSPEED_SLOW;
+                    break;
+                case Dificulty.Medium:
+                    this.noHumans = 15;
+                    this.noPredetor = 10;
+                    this.noCollector = 10;
+                    //this.noMine = 0;
+                    enemyTargetting = false;
+                    EnemyShotSpeed = SHOTSPEED_SLOW;
+                    break;
+                case Dificulty.Hard:
+                    this.noHumans = 10;
+                    this.noPredetor = 15;
+                    this.noCollector = 10;
+                    //this.noMine = 0;
+                    enemyTargetting = true;
+                    EnemyShotSpeed = SHOTSPEED_FAST;
+                    break;
+            }
+
+
+
+            CreateNewEnemys();
+
+
+        }
+
+        private void CreateNewEnemys()
+        {
+            for (int i = 0; i < noPredetor; i++)
+            {
+
+                EnemyPredator e = new EnemyPredator(this);
+                enemys.Add(e);
+            }
+            for (int i = 0; i < noCollector; i++)
+            {
+                EnemyCollector e = new EnemyCollector(this);
+                enemys.Add(e);
+            }
+            humans.Clear();
+            for (int i = 0; i < noHumans; i++)
+            {
+                Human e = new Human(this);
+                humans.Add(e);
+            }
+            //for (int i = 0; i < noMine; i++)
+            //{
+            //    EnemyMine e = new EnemyMine();
+            //    enemys.addElement(e);
+            //    enemysManager.append(e);
+            //}
         }
 
         public void Initilize()
@@ -70,6 +131,7 @@ namespace Mitgard.Resistance.Scene
 
             player.Initilize();
             background.Initilize();
+            hud.Initilize();
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -112,6 +174,7 @@ namespace Mitgard.Resistance.Scene
 
 
             background.Update(gameTime);
+            hud.Update(gameTime);
         }
 
         private void MoveEveryThing()
@@ -180,14 +243,86 @@ namespace Mitgard.Resistance.Scene
 
         }
 
-        private void NextLevel()
+        public enum Dificulty
         {
-            Game1.instance.SwitchToScene(new GameOverScene());
+            Easy = 0,
+            Medium = 1,
+            Hard = 2
         }
 
-        private static void GameOver()
+        private void NextLevel()
         {
-            Game1.instance.SwitchToScene(new GameOverScene());
+
+            ++level;
+            // EnemyDestroyer.clearDestroyer();
+            switch (difficulty)
+            {
+                case Dificulty.Easy:
+                    this.noHumans = humans.Count + Game1.random.Next(3) + 3;
+                    this.noPredetor += (Game1.random.Next(3) + 2);
+                    this.noCollector += (Game1.random.Next(3) + 2);
+                    if (level > 9)
+                    {
+                        enemyTargetting = true;
+                    }
+                    if (level > 3)
+                    {
+                        this.EnemyShotSpeed = SHOTSPEED_NORMAL;
+                    }
+                    if (level > 14)
+                    {
+                        this.EnemyShotSpeed = SHOTSPEED_FAST;
+                    }
+                    if (level > 2)
+                    {
+                        //  this.noMine += (Game1.random.Next(3) + 1);
+                    }
+                    ;
+                    break;
+                case Dificulty.Medium:
+                    this.noHumans = humans.Count + Game1.random.Next(4) + 2;
+                    this.noPredetor += (Game1.random.Next(2) + 3);
+                    this.noCollector += (Game1.random.Next(2) + 3);
+                    if (level > 5)
+                    {
+                        enemyTargetting = true;
+                    }
+                    if (level > 2)
+                    {
+                        this.EnemyShotSpeed = SHOTSPEED_NORMAL;
+                    }
+                    if (level > 9)
+                    {
+                        this.EnemyShotSpeed = SHOTSPEED_FAST;
+                    }
+
+                    if (level > 1)
+                    {
+                        // this.noMine += (Game1.random.Next(4) + 2);
+                    }
+                    break;
+                case Dificulty.Hard:
+                    this.noHumans = humans.Count + Game1.random.Next(5) + 1;
+                    this.noPredetor += (Game1.random.Next(1) + 4);
+                    this.noCollector += (Game1.random.Next(1) + 4);
+                    if (level > 3)
+                    {
+                        this.EnemyShotSpeed = SHOTSPEED_FAST;
+                    }
+                    if (level > 1)
+                    {
+                        //  this.noMine += (Game1.random.Next(2) + 4);
+                    }
+                    break;
+            }
+            CreateNewEnemys();
+
+
+        }
+
+        public void GameOver()
+        {
+            Game1.instance.SwitchToScene(new GameOverScene(score));
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime)
@@ -211,7 +346,8 @@ namespace Mitgard.Resistance.Scene
 
             input.Draw(gameTime);
 
-            batch.DrawString(Game1.instance.font, score.ToString(), Vector2.Zero, Color.Green);
+            hud.Draw(gameTime);
+
 
             batch.End();
         }
@@ -223,12 +359,7 @@ namespace Mitgard.Resistance.Scene
 
 
 
-        public class Serelizer
-        {
 
 
-
-
-        }
     }
 }

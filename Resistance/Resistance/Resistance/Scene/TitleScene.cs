@@ -24,20 +24,26 @@ namespace Mitgard.Resistance.Scene
             batch = Game1.instance.spriteBatch;
             Game1.instance.LoadContent(@"Menue\ResTitelWP7", (Texture2D t) => background = t);
             Game1.instance.LoadContent(@"Music\techno", (Song t) => techno = t);
-           
+
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             if (TouchPanel.IsGestureAvailable)
             {
-                var gesture =TouchPanel.ReadGesture();
+                var gesture = TouchPanel.ReadGesture();
 
 
                 // If the user tapped the screen, we check all buttons to see if they were tapped.
                 if (gesture.GestureType == GestureType.Tap)
                 {
-                    Game1.instance.SwitchToScene(new GameScene());
+                    if (gesture.Position.X < 250)
+                        Game1.instance.SwitchToScene(new GameScene(GameScene.Dificulty.Easy));
+                    else if (gesture.Position.X > 550)
+                        Game1.instance.SwitchToScene(new GameScene(GameScene.Dificulty.Hard));
+                    else
+                        Game1.instance.SwitchToScene(new GameScene(GameScene.Dificulty.Medium));
+
                 }
             }
 
@@ -48,7 +54,7 @@ namespace Mitgard.Resistance.Scene
             batch.Begin();
 
             batch.Draw(background, Vector2.Zero, Color.White);
-         
+
             batch.End();
         }
 

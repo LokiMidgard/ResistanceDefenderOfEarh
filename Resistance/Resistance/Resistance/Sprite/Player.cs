@@ -28,13 +28,14 @@ namespace Mitgard.Resistance.Sprite
 
         const float SPEED = 64f;
 
-        int lifePoints;
+        public int lifePoints = 5;
 
- public        Vector2 movment;
+        public Vector2 movment;
 
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
         {
+            position = new Vector2(GameScene.WORLD_WIDTH / 2, GameScene.WORLD_HEIGHT / 2);
             origion = new Vector2(24, 12);
             collisonRec = new Rectangle(-24, -12, 48, 24);
             allShots = new Shot[SHOT_COUNT];
@@ -79,7 +80,7 @@ namespace Mitgard.Resistance.Sprite
                 frameTime -= animationSpeed;
             }
 
-             movment = new Vector2();
+            movment = new Vector2();
 
             if (input.Down == AbstractInput.Type.Hold)
                 movment += new Vector2(0, 2);
@@ -140,7 +141,7 @@ namespace Mitgard.Resistance.Sprite
         public override void Initilize()
         {
             base.Initilize();
-           currentAnimation = FLY_RIGHT;
+            currentAnimation = FLY_RIGHT;
 
             Game1.instance.LoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
 
@@ -155,13 +156,13 @@ namespace Mitgard.Resistance.Sprite
         public static readonly Animation TURN_RIGHT = new Animation(new Point(0, 3 * 24), 6, 3, 48, 24);
         public static readonly Animation TURN_LEFT = new Animation(Point.Zero, 6, 3, 48, 24);
 
-        public  class Shot : Sprite
+        public class Shot : Sprite
         {
 
 
 
             public const float SPEED = 720;
-            public const double SHOT_LIFETIME = 7;
+            public const double SHOT_LIFETIME = 2;
             public Direction direction;
             private double lifetime;
             public float speed;
@@ -316,11 +317,11 @@ namespace Mitgard.Resistance.Sprite
 
 
 
-        public  void Hit()
+        public void Hit()
         {
             --lifePoints;
             if (lifePoints <= 0)
-                Game1.instance.SwitchToScene(new GameOverScene());
+                scene.GameOver();
         }
     }
 }
