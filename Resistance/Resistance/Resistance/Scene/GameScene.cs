@@ -7,6 +7,7 @@ using Mitgard.Resistance.Sprite;
 using Midgard.Resistance;
 using Microsoft.Xna.Framework;
 using Mitgard.Resistance.LevelBackground;
+using Microsoft.Phone.Shell;
 
 namespace Mitgard.Resistance.Scene
 {
@@ -45,6 +46,65 @@ namespace Mitgard.Resistance.Scene
         public int noPredetor;
         public int noCollector;
 
+        public int scoreBeginLevel;
+        private int noMine;
+
+        public GameScene(Tombstone t)
+        {
+
+
+            this.difficulty = t.difficulty;
+            player = new Player(this);
+            input = new GameInput();
+
+            background = new DesertBackground(this);
+            hud = new Hud(this);
+
+            switch (difficulty)
+            {
+                case Dificulty.Easy:
+                    this.noHumans = 20;
+                    this.noPredetor = 0;
+                    this.noCollector = 5;
+                    this.noMine = 0;
+                    enemyTargetting = false;
+                    EnemyShotSpeed = SHOTSPEED_SLOW;
+                    break;
+                case Dificulty.Medium:
+                    this.noHumans = 15;
+                    this.noPredetor = 10;
+                    this.noCollector = 10;
+                    this.noMine = 0;
+                    enemyTargetting = false;
+                    EnemyShotSpeed = SHOTSPEED_SLOW;
+                    break;
+                case Dificulty.Hard:
+                    this.noHumans = 10;
+                    this.noPredetor = 15;
+                    this.noCollector = 10;
+                    this.noMine = 0;
+                    enemyTargetting = true;
+                    EnemyShotSpeed = SHOTSPEED_FAST;
+                    break;
+            }
+
+
+            EnemyShotSpeed = t.EnemyShotSpeed;
+            enemyTargetting = t.enemyTargetting;
+            level = t.level;
+            noCollector = t.noCollector;
+            noHumans = t.noHumans;
+            noPredetor = t.noPredetor;
+            noMine = t.noMine;
+            score = t.score;
+            scoreBeginLevel = score;
+
+
+            CreateNewEnemys();
+
+
+        }
+
         public GameScene(Dificulty dificulty)
         {
             this.difficulty = dificulty;
@@ -60,7 +120,7 @@ namespace Mitgard.Resistance.Scene
                     this.noHumans = 20;
                     this.noPredetor = 0;
                     this.noCollector = 5;
-                    //this.noMine = 0;
+                    this.noMine = 0;
                     enemyTargetting = false;
                     EnemyShotSpeed = SHOTSPEED_SLOW;
                     break;
@@ -68,7 +128,7 @@ namespace Mitgard.Resistance.Scene
                     this.noHumans = 15;
                     this.noPredetor = 10;
                     this.noCollector = 10;
-                    //this.noMine = 0;
+                    this.noMine = 0;
                     enemyTargetting = false;
                     EnemyShotSpeed = SHOTSPEED_SLOW;
                     break;
@@ -76,7 +136,7 @@ namespace Mitgard.Resistance.Scene
                     this.noHumans = 10;
                     this.noPredetor = 15;
                     this.noCollector = 10;
-                    //this.noMine = 0;
+                    this.noMine = 0;
                     enemyTargetting = true;
                     EnemyShotSpeed = SHOTSPEED_FAST;
                     break;
@@ -108,12 +168,11 @@ namespace Mitgard.Resistance.Scene
                 Human e = new Human(this);
                 humans.Add(e);
             }
-            //for (int i = 0; i < noMine; i++)
-            //{
-            //    EnemyMine e = new EnemyMine();
-            //    enemys.addElement(e);
-            //    enemysManager.append(e);
-            //}
+            for (int i = 0; i < noMine; i++)
+            {
+                EnemyMine e = new EnemyMine(this);
+                enemys.Add(e);
+            }
         }
 
         public void Initilize()
@@ -252,7 +311,7 @@ namespace Mitgard.Resistance.Scene
 
         private void NextLevel()
         {
-
+            scoreBeginLevel = score;
             ++level;
             // EnemyDestroyer.clearDestroyer();
             switch (difficulty)
@@ -275,7 +334,7 @@ namespace Mitgard.Resistance.Scene
                     }
                     if (level > 2)
                     {
-                        //  this.noMine += (Game1.random.Next(3) + 1);
+                          this.noMine += (Game1.random.Next(3) + 1);
                     }
                     ;
                     break;
@@ -298,7 +357,7 @@ namespace Mitgard.Resistance.Scene
 
                     if (level > 1)
                     {
-                        // this.noMine += (Game1.random.Next(4) + 2);
+                         this.noMine += (Game1.random.Next(4) + 2);
                     }
                     break;
                 case Dificulty.Hard:
@@ -311,7 +370,7 @@ namespace Mitgard.Resistance.Scene
                     }
                     if (level > 1)
                     {
-                        //  this.noMine += (Game1.random.Next(2) + 4);
+                          this.noMine += (Game1.random.Next(2) + 4);
                     }
                     break;
             }
@@ -355,6 +414,37 @@ namespace Mitgard.Resistance.Scene
         public void DoneLoading()
         {
 
+        }
+
+
+
+        public Tombstone GetTombstone()
+        {
+            Tombstone t = new GameScene.Tombstone();
+            t.level = level;
+            t.difficulty = difficulty;
+            t.EnemyShotSpeed = EnemyShotSpeed;
+            t.enemyTargetting = enemyTargetting;
+            t.noCollector = noCollector;
+            t.noHumans = noHumans;
+            t.noMine = noMine;
+            t.noPredetor = noPredetor;
+            t.score = scoreBeginLevel;
+
+            return t;
+        }
+
+        public struct Tombstone
+        {
+            public int level;
+            public Dificulty difficulty;
+            public float EnemyShotSpeed;
+            public bool enemyTargetting;
+            public int noCollector;
+            public int noHumans;
+            public int noPredetor;
+            public int score;
+            public int noMine;
         }
 
 

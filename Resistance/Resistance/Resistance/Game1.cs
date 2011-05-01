@@ -23,6 +23,8 @@ namespace Midgard.Resistance
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        private GameScene.Tombstone? tombstone = null;
+
         public static readonly Random random = new Random();
 
         public static Game1 instance;
@@ -61,12 +63,19 @@ namespace Midgard.Resistance
 
         void Current_Deactivated(object sender, DeactivatedEventArgs e)
         {
-
+            if (actualScene is GameScene)
+            {
+                var g = actualScene as GameScene;
+                PhoneApplicationService.Current.State["tomb"] = g.GetTombstone();
+            }
         }
 
         void Current_Activated(object sender, ActivatedEventArgs e)
         {
-
+            if (PhoneApplicationService.Current.State.ContainsKey("tomb"))
+            {
+                tombstone = PhoneApplicationService.Current.State["tomb"] as GameScene.Tombstone?;
+            }
         }
 
         /// <summary>
@@ -79,6 +88,9 @@ namespace Midgard.Resistance
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            if(tombstone!=null)
+            SwitchToScene(new TitleScene(tombstone));
+            else
             SwitchToScene(new TitleScene());
             TouchPanel.EnabledGestures = GestureType.Tap;
 

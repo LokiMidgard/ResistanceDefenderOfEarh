@@ -107,6 +107,7 @@
     <Compile Include="Sprite\AbstractEnemy.cs" />
     <Compile Include="Sprite\City.cs" />
     <Compile Include="Sprite\EnemyCollector.cs" />
+    <Compile Include="Sprite\EnemyMine.cs" />
     <Compile Include="Sprite\EnemyPredator.cs" />
     <Compile Include="Sprite\Hud.cs" />
     <Compile Include="Sprite\Humans.cs" />

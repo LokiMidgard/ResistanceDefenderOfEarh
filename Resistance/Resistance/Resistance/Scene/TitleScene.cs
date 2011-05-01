@@ -18,6 +18,16 @@ namespace Mitgard.Resistance.Scene
         SpriteBatch batch;
 
         Song techno;
+        private GameScene.Tombstone? tombstone;
+
+        public TitleScene(GameScene.Tombstone? tombstone)
+        {
+            this.tombstone = tombstone;
+        }
+
+        public TitleScene()
+        {
+        }
 
         public void Initilize()
         {
@@ -37,6 +47,8 @@ namespace Mitgard.Resistance.Scene
                 // If the user tapped the screen, we check all buttons to see if they were tapped.
                 if (gesture.GestureType == GestureType.Tap)
                 {
+                    if (this.tombstone != null)
+                        Game1.instance.SwitchToScene(new GameScene(tombstone.Value));
                     if (gesture.Position.X < 250)
                         Game1.instance.SwitchToScene(new GameScene(GameScene.Dificulty.Easy));
                     else if (gesture.Position.X > 550)
