@@ -31,6 +31,8 @@ namespace Midgard.Resistance
 
         public Queue<Action> actionList = new Queue<Action>();
 
+        float deltaFPSTime = 0;
+        float fps = 0;
 
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
@@ -62,6 +64,10 @@ namespace Midgard.Resistance
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SwitchToScene(new TitleScene());
+            TouchPanel.EnabledGestures = GestureType.Tap;
+
+            this.IsFixedTimeStep = false;
+
             base.Initialize();
         }
 
@@ -98,6 +104,19 @@ namespace Midgard.Resistance
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            // The time since Update was called last
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            float fps = 1 / elapsed;
+            deltaFPSTime += elapsed;
+            if (deltaFPSTime > 1)
+            {
+                this.fps = fps;
+                deltaFPSTime -= 1;
+            }
+
+
+
             MusicManager.Update(gameTime);
 
             actualScene.Update(gameTime);
@@ -116,6 +135,10 @@ namespace Midgard.Resistance
 
 
             actualScene.Draw(gameTime);
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, fps.ToString(), Vector2.Zero, Color.Magenta);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

@@ -104,7 +104,11 @@
     <Compile Include="Scene\IScene.cs" />
     <Compile Include="Scene\LoadingScene.cs" />
     <Compile Include="Scene\TitleScene.cs" />
+    <Compile Include="Sprite\AbstractEnemy.cs" />
+    <Compile Include="Sprite\EnemyCollector.cs" />
+    <Compile Include="Sprite\Humans.cs" />
     <Compile Include="Sprite\Player.cs" />
+    <Compile Include="Sprite\RectButton.cs" />
     <Compile Include="Sprite\Sprite.cs" />
     <None Include="Properties\AppManifest.xml">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>

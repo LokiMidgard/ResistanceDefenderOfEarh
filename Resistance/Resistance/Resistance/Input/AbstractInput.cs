@@ -7,16 +7,24 @@ using System.Collections;
 
 namespace Mitgard.Resistance.Input
 {
-    class AbstractInput       :  Components.IComponent
+    public abstract class AbstractInput : Components.IComponent
     {
 
 
 
-        Rectangle[] recs;
+        protected Rectangle[] recs;
 
-        BitArray pressed;
-        BitArray hold;
-        BitArray released;
+        protected BitArray pressed;
+        protected BitArray hold;
+        protected BitArray released;
+
+        public Type this[int index]
+        {
+            get
+            {
+                return (Type)((hold[index] ? 2 : 1) | (released[index] ? 4 : 0) | (pressed[index] ? 8 : 0));
+            }
+        }
 
 
         public AbstractInput(params Rectangle[] recs)
@@ -29,20 +37,17 @@ namespace Mitgard.Resistance.Input
 
 
 
-        public void Initilize()
-        {
-           
-        }
+        public abstract void Initilize();
 
 
-
-        public void Update(GameTime gametime)
+        public virtual  void Update(GameTime gametime)
         {
             BitArray newDirection = GetActualInput();
 
-            pressed = pressed.Xor(newDirection).And(newDirection);
-            released = hold.Xor(newDirection).And(newDirection.Not());
+            pressed = new BitArray(hold).Xor(newDirection).And(newDirection);
+            released = new BitArray(hold.Xor(newDirection).And(new BitArray(newDirection).Not()));
             hold = newDirection;
+
         }
 
         private BitArray GetActualInput()
@@ -67,7 +72,14 @@ namespace Mitgard.Resistance.Input
 
 
 
-    
+        [Flags]
+        public enum Type
+        {
+            None = 1,
+            Hold = 2,
+            Release = 4 | 1,
+            Press = 8 | 2
+        }
 
 
 
