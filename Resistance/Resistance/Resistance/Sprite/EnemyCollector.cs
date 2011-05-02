@@ -11,6 +11,14 @@ namespace Mitgard.Resistance.Sprite
     public class EnemyCollector : AbstractEnemy
     {
 
+        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+
+        public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
         public static readonly Animation FLY = new Animation(Point.Zero, 2, 2, 32, 32);
 
         public EnemyCollector(GameScene scene)

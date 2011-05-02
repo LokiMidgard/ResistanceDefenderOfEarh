@@ -13,7 +13,12 @@ namespace Mitgard.Resistance.Sprite
     public abstract class Sprite : IDrawableComponent
     {
 
-        public Texture2D image;
+
+        public abstract Texture2D Image
+        {
+            get;
+            set;
+        }
 
 
         public Vector2 position;
@@ -33,8 +38,6 @@ namespace Mitgard.Resistance.Sprite
         public SpriteEffects spriteEfekt = SpriteEffects.None;
 
 
-
-
         public Sprite(String imageName, GameScene scene)
         {
             this.imageName = imageName;
@@ -44,7 +47,7 @@ namespace Mitgard.Resistance.Sprite
         public virtual void Draw(GameTime gameTime)
         {
             if (Visible)
-                Game1.instance.spriteBatch.Draw(image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+                Game1.instance.spriteBatch.Draw(Image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
 
         }
 
@@ -69,7 +72,8 @@ namespace Mitgard.Resistance.Sprite
         public virtual void Initilize()
         {
             Visible = true;
-            Game1.instance.LoadContent(imageName, (Texture2D t) => image = t);
+            if (Image == null)
+                Game1.instance.QueuLoadContent(imageName, (Texture2D t) => Image = t);
         }
 
         public bool ColideWith(Sprite other)

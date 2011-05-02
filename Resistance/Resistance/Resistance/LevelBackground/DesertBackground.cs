@@ -172,22 +172,22 @@ namespace Mitgard.Resistance.LevelBackground
             for (int i = 0; i < cloud.Length; i++)
             {
                 int j = i;
-                Game1.instance.LoadContent("cloud" + (i + 1), (Texture2D t) => cloud[j] = t);
+                Game1.instance.QueuLoadContent("cloud" + (i + 1), (Texture2D t) => cloud[j] = t);
             }
 
             for (int i = 0; i < hill.Length; i++)
             {
                 int j = i;
-                Game1.instance.LoadContent("hills" + (j + 1), (Texture2D t) => hill[j] = t);
+                Game1.instance.QueuLoadContent("hills" + (j + 1), (Texture2D t) => hill[j] = t);
             }
 
             for (int i = 0; i < mountain.Length; i++)
             {
                 int j = i;
-                Game1.instance.LoadContent("mountains" + (i + 1), (Texture2D t) => mountain[j] = t);
+                Game1.instance.QueuLoadContent("mountains" + (i + 1), (Texture2D t) => mountain[j] = t);
             }
-            Game1.instance.LoadContent("gradient", (Texture2D t) => gradient = t);
-            Game1.instance.LoadContent("stars", (Texture2D t) => star = t);
+            Game1.instance.QueuLoadContent("gradient", (Texture2D t) => gradient = t);
+            Game1.instance.QueuLoadContent("stars", (Texture2D t) => star = t);
 
         }
 

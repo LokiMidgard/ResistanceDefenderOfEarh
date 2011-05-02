@@ -6,12 +6,23 @@ using Mitgard.Resistance.Scene;
 using Microsoft.Xna.Framework;
 using Midgard.Resistance;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Mitgard.Resistance.Sprite
 {
     public class Human : Sprite
     {
 
+
+
+        private static Texture2D image;
+
+        public override Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+        
         public EnemyCollector isCapturedBy;
 
         private static bool soundLoaded;
@@ -44,7 +55,7 @@ namespace Mitgard.Resistance.Sprite
             direction = Direction.None;
             if (!soundLoaded)
             {
-                Game1.instance.LoadContent(@"Sound\scream", (SoundEffect s) => screem = s);
+                Game1.instance.QueuLoadContent(@"Sound\scream", (SoundEffect s) => screem = s);
                 soundLoaded = true;
             }
         }

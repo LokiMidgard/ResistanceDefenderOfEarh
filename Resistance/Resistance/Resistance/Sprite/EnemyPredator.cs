@@ -13,6 +13,14 @@ namespace Mitgard.Resistance.Sprite
     class EnemyPredator : AbstractEnemy
     {
 
+        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+
+        public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
         SoundEffect zap;
 
         private int direction;
@@ -59,7 +67,7 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
 
-            Game1.instance.LoadContent(@"Sound\shot", (SoundEffect t) => zap = t);
+            Game1.instance.QueuLoadContent(@"Sound\shot", (SoundEffect t) => zap = t);
 
             for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
             {
@@ -222,6 +230,14 @@ namespace Mitgard.Resistance.Sprite
 
         public class Shot : Sprite
         {
+
+            private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+
+            public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+            {
+                get { return image; }
+                set { image = value; }
+            }
 
             public static readonly Animation FLY = new Animation(Point.Zero, 2, 2, 8, 8);
 

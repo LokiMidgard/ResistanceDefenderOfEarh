@@ -32,8 +32,8 @@ namespace Mitgard.Resistance.Scene
         public void Initilize()
         {
             batch = Game1.instance.spriteBatch;
-            Game1.instance.LoadContent(@"Menue\ResTitelWP7", (Texture2D t) => background = t);
-            Game1.instance.LoadContent(@"Music\techno", (Song t) => techno = t);
+            Game1.instance.QueuLoadContent(@"Menue\ResTitelWP7", (Texture2D t) => background = t);
+            Game1.instance.QueuLoadContent(@"Music\techno", (Song t) => techno = t);
 
         }
 

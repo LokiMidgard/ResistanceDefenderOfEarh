@@ -25,7 +25,7 @@ namespace Mitgard.Resistance.Scene
         }
         public void Initilize()
         {
-            Game1.instance.LoadContent(@"Menue\ResTitelWP7_ohneGuy", (Texture2D t) => texture = t);
+            Game1.instance.QueuLoadContent(@"Menue\ResTitelWP7_ohneGuy", (Texture2D t) => texture = t);
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)

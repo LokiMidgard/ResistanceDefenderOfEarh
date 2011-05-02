@@ -86,9 +86,9 @@ namespace Mitgard.Resistance.Sprite
 
         public void Initilize()
         {
-            Game1.instance.LoadContent("Point", (Texture2D t) => point = t);
-            Game1.instance.LoadContent("bombIcon", (Texture2D t) => bombIcon = t);
-            Game1.instance.LoadContent("bombEmptyIcon", (Texture2D t) => bombEmptyIcon = t);
+            Game1.instance.QueuLoadContent("Point", (Texture2D t) => point = t);
+            Game1.instance.QueuLoadContent("bombIcon", (Texture2D t) => bombIcon = t);
+            Game1.instance.QueuLoadContent("bombEmptyIcon", (Texture2D t) => bombEmptyIcon = t);
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime)

@@ -73,7 +73,7 @@ namespace Mitgard.Resistance.Scene
             scoreBeginLevel = score;
 
 
-            CreateNewEnemys();
+            CreateNewEnemys(false);
 
 
         }
@@ -88,7 +88,7 @@ namespace Mitgard.Resistance.Scene
             hud = new Hud(this);
             PrepareGame();
 
-            CreateNewEnemys();
+            CreateNewEnemys(false);
 
 
         }
@@ -127,7 +127,7 @@ namespace Mitgard.Resistance.Scene
 
         }
 
-        private void CreateNewEnemys()
+        private void CreateNewEnemys(bool gameRunning)
         {
             for (int i = 0; i < noPredetor; i++)
             {
@@ -150,6 +150,18 @@ namespace Mitgard.Resistance.Scene
             {
                 EnemyMine e = new EnemyMine(this);
                 enemys.Add(e);
+            }
+            if (gameRunning)
+            {
+                foreach (var h in humans)
+                {
+                    h.Initilize();
+                }
+                foreach (var h in enemys)
+                {
+                    h.Initilize();
+                }
+                Game1.instance.LoadContentImidetly();
             }
         }
 
@@ -312,7 +324,7 @@ namespace Mitgard.Resistance.Scene
                     }
                     if (level > 2)
                     {
-                          this.noMine += (Game1.random.Next(3) + 1);
+                        this.noMine += (Game1.random.Next(3) + 1);
                     }
                     ;
                     break;
@@ -335,7 +347,7 @@ namespace Mitgard.Resistance.Scene
 
                     if (level > 1)
                     {
-                         this.noMine += (Game1.random.Next(4) + 2);
+                        this.noMine += (Game1.random.Next(4) + 2);
                     }
                     break;
                 case Dificulty.Hard:
@@ -348,11 +360,11 @@ namespace Mitgard.Resistance.Scene
                     }
                     if (level > 1)
                     {
-                          this.noMine += (Game1.random.Next(2) + 4);
+                        this.noMine += (Game1.random.Next(2) + 4);
                     }
                     break;
             }
-            CreateNewEnemys();
+            CreateNewEnemys(true);
 
 
         }

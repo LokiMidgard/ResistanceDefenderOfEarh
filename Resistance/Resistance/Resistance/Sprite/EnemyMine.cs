@@ -11,6 +11,13 @@ namespace Mitgard.Resistance.Sprite
     class EnemyMine : AbstractEnemy
     {
 
+        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+
+        public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
 
         public static readonly Animation FLY = new Animation(Point.Zero, 3, 3, 32, 32);
 

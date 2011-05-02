@@ -34,9 +34,9 @@ namespace Mitgard.Resistance.Sprite
         {
             if (!loaded)
             {
-                Game1.instance.LoadContent("city1", (Texture2D t) => city1 = t);
-                Game1.instance.LoadContent("city2", (Texture2D t) => city2 = t);
-                Game1.instance.LoadContent("city3", (Texture2D t) => city3 = t);
+                Game1.instance.QueuLoadContent("city1", (Texture2D t) => city1 = t);
+                Game1.instance.QueuLoadContent("city2", (Texture2D t) => city2 = t);
+                Game1.instance.QueuLoadContent("city3", (Texture2D t) => city3 = t);
                 loaded = true;
                 if (lowerCity != null && higherCity != null)
                 {

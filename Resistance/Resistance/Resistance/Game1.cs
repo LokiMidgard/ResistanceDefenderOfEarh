@@ -88,10 +88,10 @@ namespace Midgard.Resistance
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            if(tombstone!=null)
-            SwitchToScene(new TitleScene(tombstone));
+            if (tombstone != null)
+                SwitchToScene(new TitleScene(tombstone));
             else
-            SwitchToScene(new TitleScene());
+                SwitchToScene(new TitleScene());
             TouchPanel.EnabledGestures = GestureType.Tap;
 
             this.IsFixedTimeStep = false;
@@ -193,7 +193,27 @@ namespace Midgard.Resistance
 
         Dictionary<String, object> loaded = new Dictionary<string, object>();
 
-        public void LoadContent<T>(String name, LoadedDelegate<T> del)
+
+        /// <summary>
+        /// Tells the Game that it shuld Load every Content in the Loading Queue before Returning
+        /// </summary>
+        public void LoadContentImidetly()
+        {
+            while (actionList.Count != 0)
+            {
+                var action = actionList.Dequeue();
+                action();
+            }
+
+        }
+
+        /// <summary>
+        ///         Tells the Game that this Contetn shuld be loaded, next Time when the scene Switchs Lods the Content.
+        /// </summary>
+        /// <typeparam name="T">Type of Content that will be Loaded</typeparam>
+        /// <param name="name">The Name OF the Content, including the Folders</param>
+        /// <param name="del">The Delegete that will be calld when the contetn is Load</param>
+        public void QueuLoadContent<T>(String name, LoadedDelegate<T> del)
         {
 
             System.Action a = () =>

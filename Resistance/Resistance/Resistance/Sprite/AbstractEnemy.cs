@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Mitgard.Resistance.Sprite
 {
-    public class AbstractEnemy : Sprite
+    public abstract class AbstractEnemy : Sprite
     {
         public static Texture2D explosion;
         public static SoundEffect bam;
@@ -22,7 +22,7 @@ namespace Mitgard.Resistance.Sprite
         public AbstractEnemy(String name, GameScene scene)
             : base(name, scene)
         {
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), -30-Game1.random.Next(100));
+            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), -30 - Game1.random.Next(100));
         }
         public bool Dead { get; set; }
 
@@ -31,18 +31,34 @@ namespace Mitgard.Resistance.Sprite
             base.Initilize();
             if (!explosionLoaded)
             {
-                Game1.instance.LoadContent(@"Animation\ExplosionTiledsSmall", (Texture2D t) => explosion = t);
-                Game1.instance.LoadContent(@"Sound\blast", (SoundEffect t) => bam = t);
-                
+                Game1.instance.QueuLoadContent(@"Animation\ExplosionTiledsSmall", (Texture2D t) => explosion = t);
+                Game1.instance.QueuLoadContent(@"Sound\blast", (SoundEffect t) => bam = t);
+
                 explosionLoaded = true;
             }
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            if (Dead)
+            {
+                var oldImage = Image;
+                Image = explosion;
 
-        public  virtual void Destroy()
+                base.Draw(gameTime);
+
+                Image = oldImage;
+            }
+            else
+                base.Draw(gameTime);
+
+
+        }
+
+        public virtual void Destroy()
         {
             Dead = true;
-            image = explosion;
+
             currentAnimation = EXPLOAD;
             currentAnimationFrame = 0;
             origion = new Vector2(23, 23);

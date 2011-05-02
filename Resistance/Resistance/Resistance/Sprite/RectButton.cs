@@ -82,7 +82,7 @@ namespace Mitgard.Resistance.Sprite
 
         public void Initilize()
         {
-            Game1.instance.LoadContent("ButtonOutline", (Texture2D t) => tex = t);
+            Game1.instance.QueuLoadContent("ButtonOutline", (Texture2D t) => tex = t);
         }
 
 

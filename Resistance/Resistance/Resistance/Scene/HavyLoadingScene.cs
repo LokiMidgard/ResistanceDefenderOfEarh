@@ -19,7 +19,7 @@ namespace Mitgard.Resistance.Scene
 
             foreach (var s in a)
             {
-                Game1.instance.LoadContent(s, (Texture2D t) => { texList.Add(t); });
+                Game1.instance.QueuLoadContent(s, (Texture2D t) => { texList.Add(t); });
             }
         }
 

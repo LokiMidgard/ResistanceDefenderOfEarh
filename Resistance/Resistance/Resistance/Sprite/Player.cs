@@ -15,6 +15,14 @@ namespace Mitgard.Resistance.Sprite
     public class Player : Sprite
     {
 
+        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+
+        public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
         const int SHOT_COUNT = 10;
         public Shot[] allShots;
 
@@ -143,7 +151,7 @@ namespace Mitgard.Resistance.Sprite
             base.Initilize();
             currentAnimation = FLY_RIGHT;
 
-            Game1.instance.LoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
+            Game1.instance.QueuLoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
 
             foreach (var shot in allShots)
             {
@@ -159,7 +167,13 @@ namespace Mitgard.Resistance.Sprite
         public class Shot : Sprite
         {
 
+            private static Microsoft.Xna.Framework.Graphics.Texture2D image;
 
+            public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+            {
+                get { return image; }
+                set { image = value; }
+            }
 
             public const float SPEED = 720;
             public const double SHOT_LIFETIME = 2;
