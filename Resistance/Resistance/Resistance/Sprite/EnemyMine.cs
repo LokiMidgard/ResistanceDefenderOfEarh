@@ -34,6 +34,8 @@ namespace Mitgard.Resistance.Sprite
             : base(@"Animation\Enemy3", scene)
         {
             currentAnimation = FLY;
+            origion = new Vector2(16, 16);
+            collisonRec = new Rectangle(-16,-16,32,32);
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)

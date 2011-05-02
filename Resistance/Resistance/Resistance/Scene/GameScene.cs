@@ -60,34 +60,7 @@ namespace Mitgard.Resistance.Scene
             background = new DesertBackground(this);
             hud = new Hud(this);
 
-            switch (difficulty)
-            {
-                case Dificulty.Easy:
-                    this.noHumans = 20;
-                    this.noPredetor = 0;
-                    this.noCollector = 5;
-                    this.noMine = 0;
-                    enemyTargetting = false;
-                    EnemyShotSpeed = SHOTSPEED_SLOW;
-                    break;
-                case Dificulty.Medium:
-                    this.noHumans = 15;
-                    this.noPredetor = 10;
-                    this.noCollector = 10;
-                    this.noMine = 0;
-                    enemyTargetting = false;
-                    EnemyShotSpeed = SHOTSPEED_SLOW;
-                    break;
-                case Dificulty.Hard:
-                    this.noHumans = 10;
-                    this.noPredetor = 15;
-                    this.noCollector = 10;
-                    this.noMine = 0;
-                    enemyTargetting = true;
-                    EnemyShotSpeed = SHOTSPEED_FAST;
-                    break;
-            }
-
+            PrepareGame();
 
             EnemyShotSpeed = t.EnemyShotSpeed;
             enemyTargetting = t.enemyTargetting;
@@ -113,14 +86,23 @@ namespace Mitgard.Resistance.Scene
 
             background = new DesertBackground(this);
             hud = new Hud(this);
+            PrepareGame();
 
-            switch (difficulty)
+            CreateNewEnemys();
+
+
+        }
+
+        private void PrepareGame()
+        {
+
+            switch (this.difficulty)
             {
                 case Dificulty.Easy:
                     this.noHumans = 20;
                     this.noPredetor = 0;
-                    this.noCollector = 5;
-                    this.noMine = 0;
+                    this.noCollector = 0;
+                    this.noMine = 5;
                     enemyTargetting = false;
                     EnemyShotSpeed = SHOTSPEED_SLOW;
                     break;
@@ -141,10 +123,6 @@ namespace Mitgard.Resistance.Scene
                     EnemyShotSpeed = SHOTSPEED_FAST;
                     break;
             }
-
-
-
-            CreateNewEnemys();
 
 
         }
