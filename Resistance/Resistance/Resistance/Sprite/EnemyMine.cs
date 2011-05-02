@@ -40,6 +40,7 @@ namespace Mitgard.Resistance.Sprite
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            base.Update(gameTime);
             if (Dead)
             {
                 return;
