@@ -51,30 +51,28 @@ namespace Mitgard.Resistance.Sprite
 
             deltaVector *= new Vector2(1, 0);
 
-            foreach (var item in scene.enemys)
+            foreach (var item in scene.notDestroyedEnemys)
             {
 
                 Vector2 v = item.position * scalirungsvector;
-                radarDots[v+deltaVector] = Color.Violet;
-
-                if (item is EnemyPredator)
-                {
-                    var pred = item as EnemyPredator;
-                    foreach (var shot in from s in pred.shots where s.Visible select s)
-                    {
-                        radarDots[shot.position * scalirungsvector + deltaVector] = Color.WhiteSmoke;
-                    }
-                }
-
+                radarDots[v + deltaVector] = Color.Violet;
             }
 
-            foreach (var item in scene.humans)
+            foreach (var shot in from s in scene.allEnemyShots where s.Visible select s)
+            {
+                radarDots[shot.position * scalirungsvector + deltaVector] = Color.WhiteSmoke;
+            }
+
+            foreach (var item in scene.notKilledHumans)
             {
 
                 Vector2 v = item.position * scalirungsvector;
                 radarDots[v + deltaVector] = item.IsCaptured ? Color.Red : Color.Green;
 
             }
+
+            Vector2 destroyserVector = scene.destroyer.position * scalirungsvector;
+            radarDots[destroyserVector + deltaVector] = Color.Magenta;
 
 
             radarDots[playerVector + deltaVector] = Color.Yellow;

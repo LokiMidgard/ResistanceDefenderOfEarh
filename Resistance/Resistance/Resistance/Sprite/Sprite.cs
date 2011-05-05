@@ -175,20 +175,7 @@ namespace Mitgard.Resistance.Sprite
 
         }
 
-        public class Serelizer
-        {
 
-            Vector2 position;
-
-            public Animation currentAnimation;
-
-            public int currentAnimationFrame;
-
-            public SpriteEffects spriteEfekt;
-
-
-
-        }
 
     }
 

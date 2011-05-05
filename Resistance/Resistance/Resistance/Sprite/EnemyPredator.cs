@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Mitgard.Resistance.Sprite
 {
-    class EnemyPredator : AbstractEnemy
+    public class EnemyPredator : AbstractEnemy
     {
 
         private static Microsoft.Xna.Framework.Graphics.Texture2D image;
@@ -59,6 +59,7 @@ namespace Mitgard.Resistance.Sprite
             for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
             {
                 shots[i] = new Shot(scene);
+                scene.allEnemyShots.Add(shots[i]);
             }
         }
 
@@ -79,10 +80,7 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Draw(gameTime);
 
-            for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
-            {
-                shots[i].Draw(gameTime);
-            }
+
         }
 
         public override void Update(GameTime gameTime)
@@ -91,7 +89,6 @@ namespace Mitgard.Resistance.Sprite
 
             for (int i = 0; i < shots.Length; i++)
             {
-                shots[i].Update(gameTime);
                 if (!shots[i].Visible)
                     indicis[i] = true;
             }
@@ -269,6 +266,8 @@ namespace Mitgard.Resistance.Sprite
                 this.livetime = 0;
 
                 this.position = position;
+                movement.Normalize();
+                movement *= scene.EnemyShotSpeed;
                 this.movment = movement;
 
                 Visible = true;

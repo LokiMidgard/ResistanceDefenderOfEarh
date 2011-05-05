@@ -22,13 +22,14 @@ namespace Mitgard.Resistance.Sprite
         public AbstractEnemy(String name, GameScene scene)
             : base(name, scene)
         {
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), -30 - Game1.random.Next(100));
         }
         public bool Dead { get; set; }
 
         public override void Initilize()
         {
             base.Initilize();
+            Dead = false;
+            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), -30 - Game1.random.Next(100));
             if (!explosionLoaded)
             {
                 Game1.instance.QueuLoadContent(@"Animation\ExplosionTiledsSmall", (Texture2D t) => explosion = t);
@@ -70,7 +71,7 @@ namespace Mitgard.Resistance.Sprite
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (currentAnimation == EXPLOAD)
+            if (Visible && currentAnimation == EXPLOAD)
             {
                 ++currentAnimationFrame;
                 if (currentAnimationFrame > currentAnimation.Length)

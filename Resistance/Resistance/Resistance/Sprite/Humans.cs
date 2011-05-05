@@ -44,12 +44,15 @@ namespace Mitgard.Resistance.Sprite
             : base(@"Animation\NewManTiles", scene)
         {
             origion = new Vector2(12, 0);
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
             collisonRec = new Rectangle(-12, -12, 24, 24);
+            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
         }
 
         public override void Initilize()
         {
+            if(!Visible)
+            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
+
             base.Initilize();
             currentAnimation = STAND;
             direction = Direction.None;
@@ -62,7 +65,8 @@ namespace Mitgard.Resistance.Sprite
 
         internal void Die()
         {
-            scene.humans.Remove(this);
+            Visible = false;
+            scene.notKilledHumans.Remove(this);
             if (IsCaptured)
             {
                 isCapturedBy.target = null;

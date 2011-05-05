@@ -26,12 +26,16 @@ namespace Mitgard.Resistance.Sprite
         {
             currentAnimation = FLY;
             origion = new Vector2(16, 32);
-            collisonRec = new Rectangle(-16,-32,32,32);
+            collisonRec = new Rectangle(-16, -32, 32, 32);
         }
 
 
         public Human target;
-
+        public override void Initilize()
+        {
+            base.Initilize();
+            target = null;
+        }
 
         double frameTime;
         const double animationSpeed = 0.05f;
@@ -106,7 +110,7 @@ namespace Mitgard.Resistance.Sprite
 
         private void searchTarget()
         {
-            var v = scene.humans;
+            var v = scene.notKilledHumans;
 
             var newV = (from x in v where !x.IsCaptured orderby (position - x.position).LengthSquared() select x);
             target = newV.FirstOrDefault();

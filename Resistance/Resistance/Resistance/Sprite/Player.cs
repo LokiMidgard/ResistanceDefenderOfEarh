@@ -293,7 +293,7 @@ namespace Mitgard.Resistance.Sprite
                 if (currentAnimation != DIE)
                 {
 
-                    var enemys = player.scene.enemys;
+                    var enemys = player.scene.notDestroyedEnemys.Union(new AbstractEnemy[]{scene.destroyer});
                     foreach (var e in enemys)
                     {
                         if (ColideWith(e) && !e.Dead
@@ -305,7 +305,7 @@ namespace Mitgard.Resistance.Sprite
                             break;
                         }
                     }
-                    var humans = player.scene.humans;
+                    var humans = player.scene.notKilledHumans;
                     foreach (var h in humans)
                     {
                         if (ColideWith(h)
@@ -333,6 +333,7 @@ namespace Mitgard.Resistance.Sprite
 
         public void Hit()
         {
+            return;
             --lifePoints;
             if (lifePoints <= 0)
                 scene.GameOver();
