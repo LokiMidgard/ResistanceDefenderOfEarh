@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resistance", "Resistance\Resistance\Resistance.csproj", "{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ResistanceContent", "Resistance\ResistanceContent\ResistanceContent.contentproj", "{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResistanceContent", "Resistance\ResistanceContent\ResistanceContent.contentproj", "{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{657CEFDC-5654-45B3-967A-69FA09B8FB78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fonts", "Fonts", "{A505F96B-1CA1-4852-9245-02BFAE106818}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResistanceContentPipelineExtension", "ResistanceContentPipelineExtension\ResistanceContentPipelineExtension.csproj", "{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs23
 		SccLocalPath0 = .
@@ -21,20 +23,51 @@ Global
 		SccProjectUniqueName2 = Resistance\\ResistanceContent\\ResistanceContent.contentproj
 		SccProjectName2 = Resistance/ResistanceContent
 		SccLocalPath2 = Resistance\\ResistanceContent
+		SccProjectUniqueName3 = ResistanceContentPipelineExtension\\ResistanceContentPipelineExtension.csproj
+		SccProjectName3 = ResistanceContentPipelineExtension
+		SccLocalPath3 = ResistanceContentPipelineExtension
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Windows Phone = Debug|Windows Phone
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Windows Phone = Release|Windows Phone
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Mixed Platforms.ActiveCfg = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Mixed Platforms.Build.0 = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Mixed Platforms.Deploy.0 = Debug|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Debug|x86.ActiveCfg = Debug|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Mixed Platforms.Build.0 = Release|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Mixed Platforms.Deploy.0 = Release|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.Build.0 = Release|Windows Phone
 		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}.Release|x86.ActiveCfg = Release|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Windows Phone
 		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Debug|x86.ActiveCfg = Debug|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
 		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}.Release|x86.ActiveCfg = Release|Windows Phone
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|Windows Phone.Build.0 = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|x86.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Debug|x86.Build.0 = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|Mixed Platforms.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|Mixed Platforms.Build.0 = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|Windows Phone.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|Windows Phone.Build.0 = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|x86.ActiveCfg = Debug|x86
+		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

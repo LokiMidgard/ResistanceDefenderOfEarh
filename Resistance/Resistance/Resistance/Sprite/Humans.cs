@@ -22,7 +22,7 @@ namespace Mitgard.Resistance.Sprite
             get { return image; }
             set { image = value; }
         }
-        
+
         public EnemyCollector isCapturedBy;
 
         private static bool soundLoaded;
@@ -50,8 +50,8 @@ namespace Mitgard.Resistance.Sprite
 
         public override void Initilize()
         {
-            if(!Visible)
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
+            if (!Visible)
+                position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
 
             base.Initilize();
             currentAnimation = STAND;
@@ -66,6 +66,7 @@ namespace Mitgard.Resistance.Sprite
         internal void Die()
         {
             Visible = false;
+
             scene.notKilledHumans.Remove(this);
             if (IsCaptured)
             {
