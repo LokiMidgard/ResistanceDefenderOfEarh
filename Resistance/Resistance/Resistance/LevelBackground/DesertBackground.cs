@@ -50,39 +50,11 @@ namespace Mitgard.Resistance.LevelBackground
 
 
 
-            ////        for (int i = 0; i < citys.size(); i++)
-            ////        {
-            ////            City s = (City) citys.elementAt(i);
-            ////            if (s.getRefPixelX() < viewPortX - StaticFileds.WORLD_WIDTH / 2)
-            ////            {
-            ////                s.setLocalPosition(s.getX_location() + StaticFileds.WORLD_WIDTH, s.getY_location());
-            ////            }
-            ////            else if (s.getRefPixelX() > viewPortX + StaticFileds.WORLD_WIDTH / 2)
-            ////            {
-            ////                s.setLocalPosition(s.getX_location() - StaticFileds.WORLD_WIDTH, s.getY_location());
-            ////            }
-            ////        }
-
-            //        int viewportWidth = StaticFields.getCanvas().getGameWidth();
-
-
-            //        int viewportHeight = StaticFields.getCanvas().getGameHeight();
-
-            //        Level1Desinger desinger = StaticFields.getLevel1Desingenr();
-
-            //        //  viewPortX = Math.min(Math.max(viewPortX, 0 + viewportWidth / 2), StaticFileds.WORLD_WIDTH - viewportWidth / 2);
-            //float  viewPortY = Math.min(Math.max(viewPortY, 0 + (viewportHeight >>> 1)), StaticFields.WORLD_HEIGHT - (viewportHeight >>> 1));
-
-
-            //        try {
 
             float tmp1 = scene.ViewPort.X * 0.9f; // viewport *0,9;
 
 
             float pre = (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 240);
-
-
-            //            int tmp2 = (((pre << 4) + (pre << 3) + (pre << 2) + pre) >> 5) + 350;
 
             starCoordinats[0] = new Vector2(tmp1 + -400, (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 480) * 9 / 10 + 180);
             starCoordinats[1] = new Vector2(tmp1 + 0, (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 480) * 9 / 10 + 180);
@@ -91,13 +63,7 @@ namespace Mitgard.Resistance.LevelBackground
 
 
 
-            //            sky.setPosition((viewPortX - (viewportWidth >>> 1) + 0), 0);
-            ////            desinger.getMountain_1().setPosition((viewPortX - viewportWidth / 2 + 0) * 6 / 10, (viewPortY + viewportHeight / 2 - 480) * 6 / 10 + 350);
-            ////            desinger.getMountain_2().setPosition((viewPortX - viewportWidth / 2) * 6 / 10 + 1000, (viewPortY + viewportHeight / 2 - 480) * 6 / 10 + 350);
-            ////            desinger.getMountain_3().setPosition((viewPortX - viewportWidth / 2) * 6 / 10 + 2000, (viewPortY + viewportHeight / 2 - 480) * 6 / 10 + 350);
-            ////            desinger.getMountain_4().setPosition((viewPortX - viewportWidth / 2) * 6 / 10 + 3000, (viewPortY + viewportHeight / 2 - 480) * 6 / 10 + 350);
-
-            tmp1 = scene.ViewPort.X * 0.6f; // viewport*6
+           tmp1 = scene.ViewPort.X * 0.6f; // viewport*6
             float tmp2 = (((pre * 16) + (pre * 4) + pre) / 32) + 350;
 
             mountainCoordinats[0] = new Vector2(tmp1 + -1600, tmp2);
@@ -121,9 +87,7 @@ namespace Mitgard.Resistance.LevelBackground
 
             tmp1 = scene.ViewPort.X * 0.2f;
             tmp2 = (((pre + pre) * 51) / 1024) + 416;
-            //            // tmp2= ((pre<<1)/10+416);
-            //            // System.err.println(tmp2);
-
+       
             hillCoordinats[0] = new Vector2((tmp1 + -3200), tmp2);
             hillCoordinats[1] = new Vector2((tmp1 + -2400), tmp2);
             hillCoordinats[2] = new Vector2((tmp1 + -1600), tmp2);
@@ -136,30 +100,7 @@ namespace Mitgard.Resistance.LevelBackground
             hillCoordinats[9] = new Vector2((tmp1 + 4000), tmp2);
             hillCoordinats[10] = new Vector2((tmp1 + 4800), tmp2);
             hillCoordinats[11] = new Vector2((tmp1 + 5200), tmp2);
-
-
-
-
-            //        } catch (IOException ex) {
-            //            ex.printStackTrace();
-
-
-            //        }
-            //        this.background.setViewWindow(viewPortX - (viewportWidth >>> 1), viewPortY - (viewportHeight >>> 1), viewportWidth, viewportHeight);
-
-
-            //        this.enemysManager.setViewWindow(viewPortX - (viewportWidth >>> 1), viewPortY - (viewportHeight >>> 1), viewportWidth, viewportHeight);
-
-
-            //        this.humanManager.setViewWindow(viewPortX - (viewportWidth >>> 1), viewPortY - (viewportHeight >>> 1), viewportWidth, viewportHeight);
-
-
-            //        this.playerManager.setViewWindow(viewPortX - (viewportWidth >>> 1), viewPortY - (viewportHeight >>> 1), viewportWidth, viewportHeight);
-
-            //             * 
-            //             */
-
-        }
+       }
 
         public void Initilize()
         {

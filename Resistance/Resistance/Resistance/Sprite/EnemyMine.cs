@@ -40,9 +40,15 @@ namespace Mitgard.Resistance.Sprite
         public EnemyMine(GameScene scene)
             : base(@"Animation\Enemy3", scene)
         {
+            collisonRec = new Rectangle(-16,-16,32,32);
+        }
+
+        public override void Initilize()
+        {
+            base.Initilize();
             currentAnimation = FLY;
             origion = new Vector2(16, 16);
-            collisonRec = new Rectangle(-16,-16,32,32);
+        
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)

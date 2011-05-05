@@ -35,6 +35,9 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
             target = null;
+            currentAnimation = FLY;
+            origion = new Vector2(16, 16);
+
         }
 
         double frameTime;

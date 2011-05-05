@@ -152,6 +152,7 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
             Visible = false;
+            Dead = true;
             for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
             {
                 shots[i].Initilize();

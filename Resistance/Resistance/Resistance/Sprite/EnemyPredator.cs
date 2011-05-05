@@ -70,6 +70,11 @@ namespace Mitgard.Resistance.Sprite
 
             Game1.instance.QueuLoadContent(@"Sound\shot", (SoundEffect t) => zap = t);
 
+            currentAnimation = FLY;
+            origion = new Vector2(16, 16);
+
+
+
             for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
             {
                 shots[i].Initilize();
