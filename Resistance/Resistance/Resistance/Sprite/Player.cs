@@ -333,7 +333,6 @@ namespace Mitgard.Resistance.Sprite
 
         public void Hit()
         {
-            return;
             --lifePoints;
             if (lifePoints <= 0)
                 scene.GameOver();
