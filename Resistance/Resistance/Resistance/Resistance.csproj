@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="Components\IDrawableComponent.cs" />
+    <Compile Include="Configuration\GameConfiguration.cs" />
     <Compile Include="Input\AbstractInput.cs" />
     <Compile Include="Input\GameInput.cs" />
     <Compile Include="LevelBackground\DesertBackground.cs" />

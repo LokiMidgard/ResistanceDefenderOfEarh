@@ -8,14 +8,15 @@ using Midgard.Resistance;
 using Microsoft.Xna.Framework;
 using Mitgard.Resistance.LevelBackground;
 using Microsoft.Phone.Shell;
+using Mitgard.Resistance.Configuration;
 
 namespace Mitgard.Resistance.Scene
 {
     public class GameScene : IScene
     {
 
-        public const int WORLD_WIDTH = 4000;
-        public const int WORLD_HEIGHT = 480;
+        //public const int WORLD_WIDTH = 4000;
+        //public const int WORLD_HEIGHT = 480;
 
         public const int VIEWPORT_WIDTH = 800;
         public const int VIEWPORT_HEIGHT = 480;
@@ -24,6 +25,8 @@ namespace Mitgard.Resistance.Scene
         public const float SHOTSPEED_FAST = 64f;
         public const float SHOTSPEED_SLOW = 24f;
 
+
+       public GameConfiguration configuration;
 
         DesertBackground background;
 

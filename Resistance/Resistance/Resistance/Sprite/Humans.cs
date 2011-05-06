@@ -45,13 +45,13 @@ namespace Mitgard.Resistance.Sprite
         {
             origion = new Vector2(12, 0);
             collisonRec = new Rectangle(-12, -12, 24, 24);
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
+            position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), scene.configuration.WorldHeight - 24);
         }
 
         public override void Initilize()
         {
             if (!Visible)
-                position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), GameScene.WORLD_HEIGHT - 24);
+                position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), scene.configuration.WorldHeight - 24);
 
             base.Initilize();
             currentAnimation = STAND;
@@ -84,9 +84,9 @@ namespace Mitgard.Resistance.Sprite
                 currentAnimation = STAND;
                 direction = Direction.None;
                 currentAnimationFrame = 0;
-                position = new Vector2(isCapturedBy.position.X, Math.Min(GameScene.WORLD_WIDTH - 24, isCapturedBy.position.Y));
+                position = new Vector2(isCapturedBy.position.X, Math.Min(scene.configuration.WorldWidth - 24, isCapturedBy.position.Y));
             }
-            else if (position.Y < GameScene.WORLD_HEIGHT - 24)
+            else if (position.Y < scene.configuration.WorldHeight - 24)
             {
                 movment += new Vector2(0, 1);
             }

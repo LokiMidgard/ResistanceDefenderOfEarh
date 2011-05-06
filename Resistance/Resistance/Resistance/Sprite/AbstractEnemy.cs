@@ -29,7 +29,7 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
             Dead = false;
-            position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), -30 - Game1.random.Next(100));
+            position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), -30 - Game1.random.Next(100));
             if (!explosionLoaded)
             {
                 Game1.instance.QueuLoadContent(@"Animation\ExplosionTiledsSmall", (Texture2D t) => explosion = t);

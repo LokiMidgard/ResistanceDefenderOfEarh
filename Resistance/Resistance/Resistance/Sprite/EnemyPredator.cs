@@ -125,7 +125,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 direction = RUNTER;
             }
-            else if (position.Y > GameScene.WORLD_HEIGHT - currentAnimation.frameHeight - 5)
+            else if (position.Y > scene.configuration.WorldHeight - currentAnimation.frameHeight - 5)
             {
                 direction = HOCH;
             }
@@ -282,7 +282,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 if (!Visible)
                     return;
-                if ((position.Y < 0 && movment.Y <= 0) || (position.Y > GameScene.WORLD_HEIGHT && movment.Y >= 0))
+                if ((position.Y < 0 && movment.Y <= 0) || (position.Y > scene.configuration.WorldHeight && movment.Y >= 0))
                 {
                     die();
                 }

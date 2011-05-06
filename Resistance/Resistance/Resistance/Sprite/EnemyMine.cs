@@ -97,7 +97,7 @@ namespace Mitgard.Resistance.Sprite
                 {
                     direction = DIRECTION_DOWN;
                 }
-                else if (position.Y > GameScene.WORLD_HEIGHT - 32 - 5)
+                else if (position.Y > scene.configuration.WorldHeight - 32 - 5)
                 {
                     direction = DIRECTION_UP;
                 }

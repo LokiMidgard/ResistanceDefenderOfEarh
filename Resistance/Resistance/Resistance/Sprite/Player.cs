@@ -43,7 +43,7 @@ namespace Mitgard.Resistance.Sprite
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
         {
-            position = new Vector2(GameScene.WORLD_WIDTH / 2, GameScene.WORLD_HEIGHT / 2);
+            position = new Vector2( scene.configuration.WorldWidth / 2, scene.configuration.WorldHeight / 2);
             origion = new Vector2(24, 12);
             collisonRec = new Rectangle(-24, -12, 48, 24);
             allShots = new Shot[SHOT_COUNT];

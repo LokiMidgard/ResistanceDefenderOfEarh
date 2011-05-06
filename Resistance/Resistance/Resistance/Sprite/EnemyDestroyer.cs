@@ -196,7 +196,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 movment = new Vector2(0, 1);
             }
-            else if (position.Y > GameScene.WORLD_HEIGHT - currentAnimation.frameHeight - 5)
+            else if (position.Y > scene.configuration.WorldHeight - currentAnimation.frameHeight - 5)
             {
                 movment = new Vector2(0, -1);
             }
@@ -312,7 +312,7 @@ namespace Mitgard.Resistance.Sprite
                 collisonRec = new Rectangle(-16, -16, 32, 32);
                 currentAnimation = FLY;
                 origion = new Vector2(16, 16);
-                position = new Vector2(Game1.random.Next(GameScene.WORLD_WIDTH), Game1.random.Next(300) - 400);
+                position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), Game1.random.Next(300) - 400);
             }
 
         }

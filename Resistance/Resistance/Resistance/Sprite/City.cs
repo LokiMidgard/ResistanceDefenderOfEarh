@@ -98,9 +98,9 @@ namespace Mitgard.Resistance.Sprite
             this.scene = scene;
             lowerCity = new City(image, scene);
             higherCity = new City(image, scene);
-            scalewidth = ((paralxSpeed * (float)GameScene.VIEWPORT_WIDTH+GameScene.WORLD_WIDTH*0.35f));
+            scalewidth = ((paralxSpeed * (float)GameScene.VIEWPORT_WIDTH+scene.configuration.WorldWidth*0.35f));
 
-            OriginalPosition = new Vector2(Game1.random.Next((int)(GameScene.WORLD_WIDTH - scalewidth*2))+scalewidth+GameScene.VIEWPORT_WIDTH, paralaxSpeed + 335f);
+            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth*2))+scalewidth+GameScene.VIEWPORT_WIDTH, paralaxSpeed + 335f);
             Visible = true;
             lowerCity.Visible = true;
             higherCity.Visible = true;
@@ -109,7 +109,7 @@ namespace Mitgard.Resistance.Sprite
         public City(CityNumber image, GameScene scene)
         {
             // TODO: Complete member initialization
-            OriginalPosition = new Vector2(Game1.random.Next((int)(GameScene.WORLD_WIDTH - scalewidth)), 335f);
+            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth)), 335f);
             this.image = image;
             this.scene = scene;
         }
