@@ -34,7 +34,7 @@ namespace Mitgard.Resistance.Sprite
         public static SoundEffect screem;
 
         double frameTime;
-        const double animationSpeed = 0.05f;
+        const double animationSpeed = 0.2f;
 
         public static readonly Animation WALK = new Animation(Point.Zero, 2, 2, 24, 24);
         public static readonly Animation STAND = new Animation(Point.Zero, 1, 1, 24, 24);
@@ -43,9 +43,15 @@ namespace Mitgard.Resistance.Sprite
         public Human(GameScene scene)
             : base(@"Animation\NewManTiles", scene)
         {
-            origion = new Vector2(12, 0);
-            collisonRec = new Rectangle(-12, -12, 24, 24);
+            origion = new Vector2(24, 0);
+            collisonRec = new Rectangle(-12, 0, 24, 24);
             position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), scene.configuration.WorldHeight - 24);
+        }
+
+        protected override void AnimationChanged()
+        {
+            base.AnimationChanged();
+            origion = new Vector2(CurrentAnimation.frameWidth / 2, 0);
         }
 
         public override void Initilize()
@@ -54,7 +60,7 @@ namespace Mitgard.Resistance.Sprite
                 position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), scene.configuration.WorldHeight - 24);
 
             base.Initilize();
-            currentAnimation = STAND;
+            CurrentAnimation = STAND;
             direction = Direction.None;
             if (!soundLoaded)
             {
@@ -71,6 +77,7 @@ namespace Mitgard.Resistance.Sprite
             if (IsCaptured)
             {
                 isCapturedBy.target = null;
+                isCapturedBy = null;
             }
             scene.score -= 25;
             screem.Play();
@@ -81,7 +88,7 @@ namespace Mitgard.Resistance.Sprite
             Vector2 movment = new Vector2();
             if (IsCaptured)
             {
-                currentAnimation = STAND;
+                CurrentAnimation = STAND;
                 direction = Direction.None;
                 currentAnimationFrame = 0;
                 position = new Vector2(isCapturedBy.position.X, Math.Min(scene.configuration.WorldWidth - 24, isCapturedBy.position.Y));
@@ -99,18 +106,18 @@ namespace Mitgard.Resistance.Sprite
                     switch (direction)
                     {
                         case Direction.None:
-                            currentAnimation = STAND;
+                            CurrentAnimation = STAND;
                             currentAnimationFrame = 0;
                             break;
                         case Direction.Right:
-                            currentAnimation = WALK;
-                            currentAnimationFrame = 0;
+                            CurrentAnimation = WALK;
+                            currentAnimationFrame = 1;
                             spriteEfekt = Microsoft.Xna.Framework.Graphics.SpriteEffects.None;
                             break;
                         case Direction.Left:
-                            currentAnimation = WALK;
+                            CurrentAnimation = WALK;
                             spriteEfekt = Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally;
-                            currentAnimationFrame = 0;
+                            currentAnimationFrame = 1;
                             break;
                     }
                 }
@@ -132,7 +139,7 @@ namespace Mitgard.Resistance.Sprite
                 while (frameTime > animationSpeed)
                 {
                     ++currentAnimationFrame;
-                    if (currentAnimationFrame >= currentAnimation.Length)
+                    if (currentAnimationFrame >= CurrentAnimation.Length)
                     {
                         currentAnimationFrame = 1;
                     }

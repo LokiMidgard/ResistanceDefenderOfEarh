@@ -20,6 +20,7 @@ namespace Mitgard.Resistance.LevelBackground
 
 
         Texture2D gradient;
+        float gradientVerticalOffset;
 
         Texture2D[] hill = new Texture2D[4];
         Vector2[] hillCoordinats = new Vector2[12];
@@ -54,7 +55,7 @@ namespace Mitgard.Resistance.LevelBackground
             float tmp1 = scene.ViewPort.X * 0.9f; // viewport *0,9;
 
 
-            float pre = (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 240);
+            float pre = (scene.configuration.WorldHeight - (scene.ViewPort.Y + GameScene.VIEWPORT_HEIGHT));
 
             starCoordinats[0] = new Vector2(tmp1 + -400, (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 480) * 9 / 10 + 180);
             starCoordinats[1] = new Vector2(tmp1 + 0, (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 480) * 9 / 10 + 180);
@@ -62,9 +63,11 @@ namespace Mitgard.Resistance.LevelBackground
             starCoordinats[3] = new Vector2(tmp1 + 800, (scene.ViewPort.Y + (GameScene.VIEWPORT_HEIGHT >> 1) - 480) * 9 / 10 + 180);
 
 
+            gradientVerticalOffset = (float)((scene.configuration.WorldHeight - gradient.Bounds.Height) - (pre * 0.8)); //(((pre * 16) + (pre * 4) + pre) / 32) + 350;
 
-           tmp1 = scene.ViewPort.X * 0.6f; // viewport*6
-            float tmp2 = (((pre * 16) + (pre * 4) + pre) / 32) + 350;
+
+            tmp1 = scene.ViewPort.X * 0.6f; // viewport*6
+            float tmp2 = (float)((scene.configuration.WorldHeight - this.mountain[0].Bounds.Height) - (pre * 0.6)); //(((pre * 16) + (pre * 4) + pre) / 32) + 350;
 
             mountainCoordinats[0] = new Vector2(tmp1 + -1600, tmp2);
             mountainCoordinats[1] = new Vector2(tmp1 + -800, tmp2);
@@ -80,14 +83,15 @@ namespace Mitgard.Resistance.LevelBackground
             {
 
                 var c = cytiys[i];
-                c.Position = new Vector2((scene.ViewPort.X * c.paralxSpeed) + c.OriginalPosition.X, ((pre) * c.paralxSpeed) + c.OriginalPosition.Y);
+                //c.Position = new Vector2((scene.ViewPort.X * c.paralxSpeed) + c.OriginalPosition.X, ((pre) * c.paralxSpeed) + c.OriginalPosition.Y);
+                c.Position = new Vector2((scene.ViewPort.X * c.paralxSpeed) + c.OriginalPosition.X, (float)((c.OriginalPosition.Y) - (pre * c.paralxSpeed)));
 
 
             }
 
             tmp1 = scene.ViewPort.X * 0.2f;
-            tmp2 = (((pre + pre) * 51) / 1024) + 416;
-       
+            tmp2 = (float)((scene.configuration.WorldHeight - this.hill[0].Bounds.Height) - (pre * 0.2)); //(((pre * 16) + (pre * 4) + pre) / 32) + 350;
+
             hillCoordinats[0] = new Vector2((tmp1 + -3200), tmp2);
             hillCoordinats[1] = new Vector2((tmp1 + -2400), tmp2);
             hillCoordinats[2] = new Vector2((tmp1 + -1600), tmp2);
@@ -100,7 +104,7 @@ namespace Mitgard.Resistance.LevelBackground
             hillCoordinats[9] = new Vector2((tmp1 + 4000), tmp2);
             hillCoordinats[10] = new Vector2((tmp1 + 4800), tmp2);
             hillCoordinats[11] = new Vector2((tmp1 + 5200), tmp2);
-       }
+        }
 
         public void Initilize()
         {
@@ -129,6 +133,7 @@ namespace Mitgard.Resistance.LevelBackground
             }
             Game1.instance.QueuLoadContent("gradient", (Texture2D t) => gradient = t);
             Game1.instance.QueuLoadContent("stars", (Texture2D t) => star = t);
+            cytiys = cytiys.OrderByDescending(c => c.paralxSpeed).ToArray();
 
         }
 
@@ -136,11 +141,15 @@ namespace Mitgard.Resistance.LevelBackground
         {
             var batch = Game1.instance.spriteBatch;
 
-            for (int i = 0; i < starCoordinats.Length; i++)
+            for (int y = 0; y < GameScene.VIEWPORT_HEIGHT + star.Bounds.Height; y += star.Bounds.Height)
             {
-                batch.Draw(star, starCoordinats[i] - scene.ViewPort, Color.White);
+
+                for (int i = 0; i < starCoordinats.Length; i++)
+                {
+                    batch.Draw(star, starCoordinats[i] - scene.ViewPort + new Vector2(0, y), Color.White);
+                }
             }
-            batch.Draw(gradient, new Rectangle(0, 0, 800, 480), Color.White);
+            batch.Draw(gradient, new Rectangle(0, (int)(gradientVerticalOffset - scene.ViewPort.Y), GameScene.VIEWPORT_WIDTH, 480), Color.White);
 
             for (int i = 0; i < mountainCoordinats.Length; i += 2)
             {

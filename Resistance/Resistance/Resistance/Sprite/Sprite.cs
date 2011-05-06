@@ -31,7 +31,22 @@ namespace Mitgard.Resistance.Sprite
 
         private String imageName;
 
-        public Animation currentAnimation;
+        private Animation currentAnimation;
+
+        public Animation CurrentAnimation
+        {
+            get { return currentAnimation; }
+            set
+            {
+                currentAnimation = value;
+                AnimationChanged();
+            }
+        }
+
+        protected virtual void AnimationChanged()
+        {
+            origion = new Vector2(currentAnimation.frameWidth / 2, currentAnimation.frameHeight / 2);
+        }
 
         public int currentAnimationFrame;
 
@@ -47,7 +62,7 @@ namespace Mitgard.Resistance.Sprite
         public virtual void Draw(GameTime gameTime)
         {
             if (Visible)
-                Game1.instance.spriteBatch.Draw(Image, position - scene.ViewPort, currentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+                Game1.instance.spriteBatch.Draw(Image, position - scene.ViewPort, CurrentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
 
         }
 

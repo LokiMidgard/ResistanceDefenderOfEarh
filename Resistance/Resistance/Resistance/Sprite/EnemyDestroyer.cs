@@ -137,7 +137,7 @@ namespace Mitgard.Resistance.Sprite
             : base(@"Animation\Enemy4", scene)
         {
             Dead = true;
-            currentAnimation = FLY;
+            CurrentAnimation = FLY;
             collisonRec = new Rectangle(-15, -15, -32, 32);
             origion = new Vector2(16, 16);
             shots = new EnemyPredator.Shot[MAX_NUMBER_OF_SHOTS];
@@ -196,7 +196,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 movment = new Vector2(0, 1);
             }
-            else if (position.Y > scene.configuration.WorldHeight - currentAnimation.frameHeight - 5)
+            else if (position.Y > scene.configuration.WorldHeight - CurrentAnimation.frameHeight - 5)
             {
                 movment = new Vector2(0, -1);
             }
@@ -310,7 +310,7 @@ namespace Mitgard.Resistance.Sprite
                 livePoints = EnemyDestroyer.MAX_LIVEPOINTS;
                 aktuellerTic = 0;
                 collisonRec = new Rectangle(-16, -16, 32, 32);
-                currentAnimation = FLY;
+                CurrentAnimation = FLY;
                 origion = new Vector2(16, 16);
                 position = new Vector2(Game1.random.Next(scene.configuration.WorldWidth), Game1.random.Next(300) - 400);
             }

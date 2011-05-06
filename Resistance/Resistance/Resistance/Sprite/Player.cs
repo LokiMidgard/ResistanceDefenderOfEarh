@@ -43,7 +43,7 @@ namespace Mitgard.Resistance.Sprite
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
         {
-            position = new Vector2( scene.configuration.WorldWidth / 2, scene.configuration.WorldHeight / 2);
+            position = new Vector2(scene.configuration.WorldWidth / 2, scene.configuration.WorldHeight / 2);
             origion = new Vector2(24, 12);
             collisonRec = new Rectangle(-24, -12, 48, 24);
             allShots = new Shot[SHOT_COUNT];
@@ -65,22 +65,22 @@ namespace Mitgard.Resistance.Sprite
             while (frameTime > animationSpeed)
             {
 
-                if (currentAnimation == TURN_LEFT)
+                if (CurrentAnimation == TURN_LEFT)
                 {
                     ++currentAnimationFrame;
-                    if (currentAnimationFrame >= currentAnimation.Length)
+                    if (currentAnimationFrame >= CurrentAnimation.Length)
                     {
-                        currentAnimation = FLY_Left;
+                        CurrentAnimation = FLY_Left;
                         currentAnimationFrame = 0;
                     }
 
                 }
-                else if (currentAnimation == TURN_RIGHT)
+                else if (CurrentAnimation == TURN_RIGHT)
                 {
                     ++currentAnimationFrame;
-                    if (currentAnimationFrame >= currentAnimation.Length)
+                    if (currentAnimationFrame >= CurrentAnimation.Length)
                     {
-                        currentAnimation = FLY_RIGHT;
+                        CurrentAnimation = FLY_RIGHT;
                         currentAnimationFrame = 0;
                     }
                 }
@@ -94,24 +94,24 @@ namespace Mitgard.Resistance.Sprite
                 movment += new Vector2(0, 2);
             if (input.Up == AbstractInput.Type.Hold)
                 movment += new Vector2(0, -2);
-            if (currentAnimation == FLY_RIGHT)
+            if (CurrentAnimation == FLY_RIGHT)
             {
                 movment += new Vector2(1, 0);
                 if (input.Right == AbstractInput.Type.Hold)
                     movment += new Vector2(2, 0);
                 else if (input.Left == AbstractInput.Type.Press)
-                    currentAnimation = TURN_LEFT;
+                    CurrentAnimation = TURN_LEFT;
             }
-            else if (currentAnimation == FLY_Left)
+            else if (CurrentAnimation == FLY_Left)
             {
                 movment += new Vector2(-1, 0);
                 if (input.Left == AbstractInput.Type.Hold)
                     movment += new Vector2(-2, 0);
                 else if (input.Right == AbstractInput.Type.Press)
-                    currentAnimation = TURN_RIGHT;
+                    CurrentAnimation = TURN_RIGHT;
             }
             movment *= SPEED;
-            if (input.Fire == AbstractInput.Type.Press && currentAnimation != TURN_LEFT && currentAnimation != TURN_RIGHT)
+            if (input.Fire == AbstractInput.Type.Press && CurrentAnimation != TURN_LEFT && CurrentAnimation != TURN_RIGHT)
             {
                 Fire(movment.X);
             }
@@ -142,14 +142,14 @@ namespace Mitgard.Resistance.Sprite
             int i = indicis.First().Key;
             indicis.Remove(i);
             Shot s = allShots[i];
-            s.Fire(speed, currentAnimation == FLY_Left ? Direction.Left : Direction.Right, position);
+            s.Fire(speed, CurrentAnimation == FLY_Left ? Direction.Left : Direction.Right, position);
             shoot.Play();
         }
 
         public override void Initilize()
         {
             base.Initilize();
-            currentAnimation = FLY_RIGHT;
+            CurrentAnimation = FLY_RIGHT;
 
             Game1.instance.QueuLoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
 
@@ -197,13 +197,19 @@ namespace Mitgard.Resistance.Sprite
                 : base(@"Animation\FireBlastTiles", player.scene)
             {
                 this.player = player;
-                currentAnimation = FLY;
+                CurrentAnimation = FLY;
             }
 
             public override void Initilize()
             {
                 base.Initilize();
                 Visible = false;
+            }
+
+            protected override void AnimationChanged()
+            {
+                //Auskommentiert, da die Collision rectangls zu sehr mit der Grafik verknüpft sind
+                //base.AnimationChanged();
             }
 
             public void Fire(float playerSpeed, Direction playerDirection, Vector2 position)
@@ -228,7 +234,7 @@ namespace Mitgard.Resistance.Sprite
                 Visible = true;
                 currentAnimationFrame = 0;
                 lifetime = 0;
-                currentAnimation = CREATE;
+                CurrentAnimation = CREATE;
             }
 
 
@@ -236,7 +242,7 @@ namespace Mitgard.Resistance.Sprite
 
             private void Die()
             {
-                currentAnimation = DIE;
+                CurrentAnimation = DIE;
                 currentAnimationFrame = 0;
                 //int frame = getFrame();
                 //int seqLength = getFrameSequenceLength();
@@ -257,7 +263,7 @@ namespace Mitgard.Resistance.Sprite
 
                 lifetime += gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (lifetime > SHOT_LIFETIME && currentAnimation != DIE)
+                if (lifetime > SHOT_LIFETIME && CurrentAnimation != DIE)
                 {
                     Die();
                 }
@@ -266,16 +272,16 @@ namespace Mitgard.Resistance.Sprite
 
                 while (frameTime > animationSpeed)
                 {
-                    if (currentAnimation == CREATE)
+                    if (CurrentAnimation == CREATE)
                     {
                         ++currentAnimationFrame;
                         if (currentAnimationFrame > 5)
                         {
                             currentAnimationFrame = 0;
-                            currentAnimation = FLY;
+                            CurrentAnimation = FLY;
                         }
                     }
-                    else if (currentAnimation == DIE)
+                    else if (CurrentAnimation == DIE)
                     {
                         ++currentAnimationFrame;
                         if (currentAnimationFrame > 6)
@@ -290,10 +296,10 @@ namespace Mitgard.Resistance.Sprite
                 }
 
 
-                if (currentAnimation != DIE)
+                if (CurrentAnimation != DIE)
                 {
 
-                    var enemys = player.scene.notDestroyedEnemys.Union(new AbstractEnemy[]{scene.destroyer});
+                    var enemys = player.scene.notDestroyedEnemys.Union(new AbstractEnemy[] { scene.destroyer });
                     foreach (var e in enemys)
                     {
                         if (ColideWith(e) && !e.Dead

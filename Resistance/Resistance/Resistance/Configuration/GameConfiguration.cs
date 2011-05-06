@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Mitgard.Resistance.Configuration
 {
-    class GameConfiguration
+    public class GameConfiguration
     {
-        public int WorldWidth { get; set; }
-        public int WorldHeight { get; set; }
+        public int WorldWidth { get { return 4000; } }
+        public int WorldHeight { get { return 800; } }
 
 
     }

@@ -60,7 +60,7 @@ namespace Mitgard.Resistance.Sprite
         {
             Dead = true;
 
-            currentAnimation = EXPLOAD;
+            CurrentAnimation = EXPLOAD;
             currentAnimationFrame = 0;
             origion = new Vector2(23, 23);
             position += new Vector2(-64 >> 2, -64 >> 2);
@@ -71,10 +71,10 @@ namespace Mitgard.Resistance.Sprite
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (Visible && currentAnimation == EXPLOAD)
+            if (Visible && CurrentAnimation == EXPLOAD)
             {
                 ++currentAnimationFrame;
-                if (currentAnimationFrame > currentAnimation.Length)
+                if (currentAnimationFrame > CurrentAnimation.Length)
                 {
                     Visible = false;
                 }

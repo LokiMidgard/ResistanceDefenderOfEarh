@@ -54,7 +54,7 @@ namespace Mitgard.Resistance.Sprite
         {
             origion = new Microsoft.Xna.Framework.Vector2(16, 16);
             collisonRec = new Rectangle(-16, -16, 32, 32);
-            currentAnimation = FLY;
+            CurrentAnimation = FLY;
             shots = new Shot[MAX_NUMBER_OF_SHOTS];
             for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
             {
@@ -70,7 +70,7 @@ namespace Mitgard.Resistance.Sprite
 
             Game1.instance.QueuLoadContent(@"Sound\shot", (SoundEffect t) => zap = t);
 
-            currentAnimation = FLY;
+            CurrentAnimation = FLY;
             origion = new Vector2(16, 16);
 
 
@@ -125,7 +125,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 direction = RUNTER;
             }
-            else if (position.Y > scene.configuration.WorldHeight - currentAnimation.frameHeight - 5)
+            else if (position.Y > scene.configuration.WorldHeight - CurrentAnimation.frameHeight - 5)
             {
                 direction = HOCH;
             }
@@ -262,7 +262,7 @@ namespace Mitgard.Resistance.Sprite
             public Shot(GameScene scene)
                 : base(@"Animation\newAlienFireBlast", scene)
             {
-                currentAnimation = FLY;
+                CurrentAnimation = FLY;
             }
 
             public void init(Vector2 position, Vector2 movement, double lifetime)
@@ -301,7 +301,7 @@ namespace Mitgard.Resistance.Sprite
                     while (frameTime > animationSpeed)
                     {
                         ++currentAnimationFrame;
-                        if (currentAnimationFrame > currentAnimation.Length)
+                        if (currentAnimationFrame > CurrentAnimation.Length)
                         {
                             currentAnimationFrame = 0;
                         }

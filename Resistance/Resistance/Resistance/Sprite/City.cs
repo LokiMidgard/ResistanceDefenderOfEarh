@@ -12,8 +12,9 @@ namespace Mitgard.Resistance.Sprite
 {
     class City : IDrawableComponent
     {
-
-        Texture2D texture;
+        static Vector2 originCity1;
+        static Vector2 originCity2;
+        static Vector2 originCity3;
 
         public float paralxSpeed;
         public float scalewidth;
@@ -34,9 +35,21 @@ namespace Mitgard.Resistance.Sprite
         {
             if (!loaded)
             {
-                Game1.instance.QueuLoadContent("city1", (Texture2D t) => city1 = t);
-                Game1.instance.QueuLoadContent("city2", (Texture2D t) => city2 = t);
-                Game1.instance.QueuLoadContent("city3", (Texture2D t) => city3 = t);
+                Game1.instance.QueuLoadContent("city1", (Texture2D t) =>
+                {
+                    city1 = t;
+                    originCity1 = new Vector2(city1.Bounds.Width / 2, city1.Bounds.Height);
+                });
+                Game1.instance.QueuLoadContent("city2", (Texture2D t) =>
+                {
+                    city2 = t;
+                    originCity2 = new Vector2(city2.Bounds.Width / 2, city2.Bounds.Height);
+                });
+                Game1.instance.QueuLoadContent("city3", (Texture2D t) =>
+                {
+                    city3 = t;
+                    originCity3 = new Vector2(city3.Bounds.Width / 2, city3.Bounds.Height);
+                });
                 loaded = true;
                 if (lowerCity != null && higherCity != null)
                 {
@@ -51,13 +64,13 @@ namespace Mitgard.Resistance.Sprite
             switch (image)
             {
                 case CityNumber.City1:
-                    Game1.instance.spriteBatch.Draw(city1, Position -scene.ViewPort , Color.White);
+                    Game1.instance.spriteBatch.Draw(city1, Position - scene.ViewPort, null, Color.White, 0f, originCity1, 1f, SpriteEffects.None, 0f);
                     break;
                 case CityNumber.City2:
-                    Game1.instance.spriteBatch.Draw(city2, Position - scene.ViewPort, Color.White);
+                    Game1.instance.spriteBatch.Draw(city2, Position - scene.ViewPort, null, Color.White, 0f, originCity2, 1f, SpriteEffects.None, 0f);
                     break;
                 case CityNumber.City3:
-                    Game1.instance.spriteBatch.Draw(city3, Position - scene.ViewPort, Color.White);
+                    Game1.instance.spriteBatch.Draw(city3, Position - scene.ViewPort, null, Color.White, 0f, originCity3, 1f, SpriteEffects.None, 0f);
                     break;
 
             }
@@ -98,9 +111,9 @@ namespace Mitgard.Resistance.Sprite
             this.scene = scene;
             lowerCity = new City(image, scene);
             higherCity = new City(image, scene);
-            scalewidth = ((paralxSpeed * (float)GameScene.VIEWPORT_WIDTH+scene.configuration.WorldWidth*0.35f));
+            scalewidth = ((paralxSpeed * (float)GameScene.VIEWPORT_WIDTH + scene.configuration.WorldWidth * 0.35f));
 
-            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth*2))+scalewidth+GameScene.VIEWPORT_WIDTH, paralaxSpeed + 335f);
+            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth * 2)) + scalewidth + GameScene.VIEWPORT_WIDTH, scene.configuration.WorldHeight - 10f - (1 - paralxSpeed) * 10f);
             Visible = true;
             lowerCity.Visible = true;
             higherCity.Visible = true;
@@ -109,7 +122,7 @@ namespace Mitgard.Resistance.Sprite
         public City(CityNumber image, GameScene scene)
         {
             // TODO: Complete member initialization
-            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth)), 335f);
+            OriginalPosition = new Vector2(Game1.random.Next((int)(scene.configuration.WorldWidth - scalewidth)), scene.configuration.WorldHeight - 10f - (1 - paralxSpeed) * 70f);
             this.image = image;
             this.scene = scene;
         }
@@ -137,7 +150,7 @@ namespace Mitgard.Resistance.Sprite
                     break;
             }
 
-            return new City(image, (float)(Game1.random.NextDouble() * 0.3 + 0.2),scene);
+            return new City(image, (float)(Game1.random.NextDouble() * 0.3 + 0.2), scene);
         }
 
 

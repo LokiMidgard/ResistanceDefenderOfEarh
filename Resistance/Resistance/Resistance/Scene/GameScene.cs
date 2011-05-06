@@ -15,8 +15,8 @@ namespace Mitgard.Resistance.Scene
     public class GameScene : IScene
     {
 
-        //public const int WORLD_WIDTH = 4000;
-        //public const int WORLD_HEIGHT = 480;
+        //public const int configuration.WorldWidth = 4000;
+        //public const int configuration.WorldHeight = 480;
 
         public const int VIEWPORT_WIDTH = 800;
         public const int VIEWPORT_HEIGHT = 480;
@@ -26,7 +26,7 @@ namespace Mitgard.Resistance.Scene
         public const float SHOTSPEED_SLOW = 24f;
 
 
-       public GameConfiguration configuration;
+       public GameConfiguration configuration = new GameConfiguration();
 
         DesertBackground background;
 
@@ -275,25 +275,25 @@ namespace Mitgard.Resistance.Scene
         {
             if (player.position.X < 0)
             {
-                player.position.X += WORLD_WIDTH;
+                player.position.X += configuration.WorldWidth;
             }
-            else if (player.position.X > WORLD_WIDTH)
+            else if (player.position.X > configuration.WorldWidth)
             {
-                player.position.X -= WORLD_WIDTH;
+                player.position.X -= configuration.WorldWidth;
             }
 
             ViewPort = (player.position * new Vector2(1, 1)) - new Vector2(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2);
-            ViewPort.Y = MathHelper.Clamp(ViewPort.Y, 0, WORLD_HEIGHT - VIEWPORT_HEIGHT);
+            ViewPort.Y = MathHelper.Clamp(ViewPort.Y, 0, configuration.WorldHeight - VIEWPORT_HEIGHT);
 
             foreach (var s in notDestroyedEnemys.Union(new AbstractEnemy[] { destroyer }))
             {
-                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                if (s.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
                 {
-                    s.position.X += WORLD_WIDTH;
+                    s.position.X += configuration.WorldWidth;
                 }
-                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                else if (s.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
                 {
-                    s.position.X -= WORLD_WIDTH;
+                    s.position.X -= configuration.WorldWidth;
                 }
             }
 
@@ -301,15 +301,15 @@ namespace Mitgard.Resistance.Scene
             foreach (var s in player.allShots)
             {
 
-                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                if (s.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
                 {
-                    s.position.X += WORLD_WIDTH;
+                    s.position.X += configuration.WorldWidth;
 
 
                 }
-                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                else if (s.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
                 {
-                    s.position.X -= WORLD_WIDTH;
+                    s.position.X -= configuration.WorldWidth;
 
 
                 }
@@ -318,15 +318,15 @@ namespace Mitgard.Resistance.Scene
             foreach (var s in allEnemyShots)
             {
 
-                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                if (s.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
                 {
-                    s.position.X += WORLD_WIDTH;
+                    s.position.X += configuration.WorldWidth;
 
 
                 }
-                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                else if (s.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
                 {
-                    s.position.X -= WORLD_WIDTH;
+                    s.position.X -= configuration.WorldWidth;
 
 
                 }
@@ -335,15 +335,15 @@ namespace Mitgard.Resistance.Scene
             foreach (var s in notKilledHumans)
             {
 
-                if (s.position.X < ViewPort.X - (WORLD_WIDTH >> 1))
+                if (s.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
                 {
-                    s.position.X += WORLD_WIDTH;
+                    s.position.X += configuration.WorldWidth;
 
 
                 }
-                else if (s.position.X > ViewPort.X + (WORLD_WIDTH >> 1))
+                else if (s.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
                 {
-                    s.position.X -= WORLD_WIDTH;
+                    s.position.X -= configuration.WorldWidth;
 
 
                 }

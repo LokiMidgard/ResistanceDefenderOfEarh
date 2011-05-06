@@ -24,7 +24,7 @@ namespace Mitgard.Resistance.Sprite
         public EnemyCollector(GameScene scene)
             : base(@"Animation\Enemy2", scene)
         {
-            currentAnimation = FLY;
+            CurrentAnimation = FLY;
             origion = new Vector2(16, 32);
             collisonRec = new Rectangle(-16, -32, 32, 32);
         }
@@ -35,14 +35,19 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
             target = null;
-            currentAnimation = FLY;
-            origion = new Vector2(16, 32);
+            CurrentAnimation = FLY;
+
 
         }
 
         double frameTime;
         const double animationSpeed = 0.05f;
         const float SPEED = 16;
+
+        protected override void AnimationChanged()
+        {
+            origion = new Vector2(CurrentAnimation.frameWidth / 2, CurrentAnimation.frameHeight);
+        }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
@@ -101,7 +106,7 @@ namespace Mitgard.Resistance.Sprite
             while (frameTime > animationSpeed)
             {
                 ++currentAnimationFrame;
-                if (currentAnimationFrame >= currentAnimation.Length)
+                if (currentAnimationFrame >= CurrentAnimation.Length)
                 {
                     currentAnimationFrame = 0;
                 }

@@ -46,7 +46,7 @@ namespace Mitgard.Resistance.Sprite
         public override void Initilize()
         {
             base.Initilize();
-            currentAnimation = FLY;
+            CurrentAnimation = FLY;
             origion = new Vector2(16, 16);
         
         }
