@@ -133,7 +133,7 @@ namespace Mitgard.Resistance.Scene
                     break;
             }
 
-
+           
         }
 
         private void CreateNewEnemys(bool gameRunning)

@@ -62,7 +62,7 @@ namespace Mitgard.Resistance.Sprite
         public virtual void Draw(GameTime gameTime)
         {
             if (Visible)
-                Game1.instance.spriteBatch.Draw(Image, position - scene.ViewPort, CurrentAnimation[currentAnimationFrame], Color.White, 0f, origion, 1f, spriteEfekt, 0f);
+                Game1.instance.spriteBatch.Draw(Image, position - scene.ViewPort, CurrentAnimation[currentAnimationFrame], Color.White, 0f, origion, scale, spriteEfekt, 0f);
 
         }
 
@@ -81,6 +81,7 @@ namespace Mitgard.Resistance.Sprite
         }
 
         public event EventHandler<EventArgs> VisibleChanged;
+        public float scale = 1f;
 
         public abstract void Update(GameTime gameTime);
 

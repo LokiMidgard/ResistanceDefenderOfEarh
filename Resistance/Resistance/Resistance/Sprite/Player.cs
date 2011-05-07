@@ -30,6 +30,8 @@ namespace Mitgard.Resistance.Sprite
 
         SoundEffect shoot;
 
+        Bomb bomb;
+
         double frameTime;
 
         const double animationSpeed = 0.05f;
@@ -43,6 +45,7 @@ namespace Mitgard.Resistance.Sprite
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
         {
+            bomb = new Bomb(scene);
             position = new Vector2(scene.configuration.WorldWidth / 2, scene.configuration.WorldHeight / 2);
             origion = new Vector2(24, 12);
             collisonRec = new Rectangle(-24, -12, 48, 24);
@@ -59,7 +62,7 @@ namespace Mitgard.Resistance.Sprite
         {
 
             var input = scene.input;
-
+            bomb.Update(gameTime);
             frameTime += gameTime.ElapsedGameTime.TotalSeconds;
 
             while (frameTime > animationSpeed)
@@ -115,6 +118,10 @@ namespace Mitgard.Resistance.Sprite
             {
                 Fire(movment.X);
             }
+            if (input.Bomb == AbstractInput.Type.Press && !bomb.Visible && CurrentAnimation != TURN_LEFT && CurrentAnimation != TURN_RIGHT)
+            {
+                bomb.boom();
+            }
             position += movment * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             for (int i = 0; i < allShots.Length; i++)
@@ -132,6 +139,7 @@ namespace Mitgard.Resistance.Sprite
             {
                 shot.Draw(gameTime);
             }
+            bomb.Draw(gameTime);
             base.Draw(gameTime);
         }
 
@@ -150,7 +158,7 @@ namespace Mitgard.Resistance.Sprite
         {
             base.Initilize();
             CurrentAnimation = FLY_RIGHT;
-
+            bomb.Initilize();
             Game1.instance.QueuLoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
 
             foreach (var shot in allShots)
@@ -342,6 +350,91 @@ namespace Mitgard.Resistance.Sprite
             --lifePoints;
             if (lifePoints <= 0)
                 scene.GameOver();
+        }
+
+        public class Bomb : Sprite
+        {
+
+            private float destructivXRangeWithScaleOne;
+            private float destructivYRangeWithScaleOne;
+
+            static Texture2D tex;
+
+
+            public override Texture2D Image
+            {
+                get
+                {
+                    return tex;
+                }
+                set
+                {
+                    tex = value;
+                }
+            }
+
+            protected override void AnimationChanged()
+            {
+                base.AnimationChanged();
+                destructivXRangeWithScaleOne = CurrentAnimation.frameWidth / 2;
+                destructivYRangeWithScaleOne = CurrentAnimation.frameHeight / 2;
+            }
+
+
+            public override void Update(GameTime gameTime)
+            {
+                if (!Visible)
+                    return;
+                if (scale >= 2.0f)
+                {
+                    Visible = false;
+                    return;
+                }
+
+                foreach (var enemy in scene.notDestroyedEnemys)
+                {
+                    if (PointWithinExplosion(enemy.position))
+                        enemy.Destroy();
+                }
+
+                scale = (float)sequence;
+
+                sequence += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            public bool PointWithinExplosion(Vector2 pointposition)
+            {
+                Vector2 realativPosition = pointposition - position;
+                if (destructivXRangeWithScaleOne != destructivYRangeWithScaleOne)
+                    realativPosition *= new Vector2(1, destructivXRangeWithScaleOne / destructivYRangeWithScaleOne);
+                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * scale;
+            }
+
+
+            public override void Draw(GameTime gameTime)
+            {
+                base.Draw(gameTime);
+            }
+
+
+
+            double sequence = 0;
+
+            public Bomb(GameScene scene)
+                : base(@"Animation\BombExplosion", scene)
+            {
+                CurrentAnimation = new Animation(Point.Zero, 1, 1, 475, 474);
+            }
+
+            public void boom()
+            {
+                sequence = 0;
+                position = scene.player.position;
+                Visible = true;
+            }
+
+
+
         }
     }
 }
