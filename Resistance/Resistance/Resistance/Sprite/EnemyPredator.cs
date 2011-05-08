@@ -189,7 +189,7 @@ namespace Mitgard.Resistance.Sprite
                     var newPlayerPosition = player.position + (i * mov);
 
                     target = newPlayerPosition - position;
-                    if (target.LengthSquared() <= scene.EnemyShotSpeed * i * scene.EnemyShotSpeed * i)
+                    if (target.LengthSquared() <= scene.configuration.EnemyShotSpeed * i * scene.configuration.EnemyShotSpeed * i)
                         goto targetin;
 
                 }
@@ -221,7 +221,7 @@ namespace Mitgard.Resistance.Sprite
             Shot s = shots[index];
 
             target.Normalize();
-            target *= scene.EnemyShotSpeed;
+            target *= scene.configuration.EnemyShotSpeed;
             s.init(position, target, distance + 150);
             zap.Play();
             //TODO: Shoot
@@ -272,7 +272,7 @@ namespace Mitgard.Resistance.Sprite
 
                 this.position = position;
                 movement.Normalize();
-                movement *= scene.EnemyShotSpeed;
+                movement *= scene.configuration.EnemyShotSpeed;
                 this.movment = movement;
 
                 Visible = true;
