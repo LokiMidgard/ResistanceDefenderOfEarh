@@ -12,35 +12,32 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Mitgard.Resistance.Sprite
 {
+
     public class Player : Sprite
     {
 
-        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+        const double animationSpeed = 0.05f;
+        public static readonly Animation FLY_Left = new Animation(new Point(0, 3 * 24), 1, 1, 48, 24);
+        public static readonly Animation FLY_RIGHT = new Animation(Point.Zero, 1, 1, 48, 24);
+        public static readonly Animation TURN_LEFT = new Animation(Point.Zero, 6, 3, 48, 24);
+        public static readonly Animation TURN_RIGHT = new Animation(new Point(0, 3 * 24), 6, 3, 48, 24);
+        SoundEffect shoot;
 
+        System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
+        public Shot[] allShots;
+        Bomb bomb;
+        double frameTime;
+        public Vector2 movment;
+
+
+        private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+        private int lifePoints;
         public override Microsoft.Xna.Framework.Graphics.Texture2D Image
         {
             get { return image; }
             set { image = value; }
         }
 
-        const int SHOT_COUNT = 10;
-        public Shot[] allShots;
-
-        System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
-
-        SoundEffect shoot;
-
-        Bomb bomb;
-
-        double frameTime;
-
-        const double animationSpeed = 0.05f;
-
-        const float SPEED = 64f;
-
-        public int lifePoints = 5;
-
-        public Vector2 movment;
 
         public Player(GameScene scene)
             : base(@"Animation\SmallShipTiles", scene)
@@ -49,13 +46,56 @@ namespace Mitgard.Resistance.Sprite
             position = new Vector2(scene.configuration.WorldWidth / 2, scene.configuration.WorldHeight / 2);
             origion = new Vector2(24, 12);
             collisonRec = new Rectangle(-24, -12, 48, 24);
-            allShots = new Shot[SHOT_COUNT];
+            allShots = new Shot[scene.configuration.Player.ShotCount];
 
             for (int i = 0; i < allShots.Length; i++)
             {
                 allShots[i] = new Shot(this);
             }
 
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            foreach (var shot in allShots)
+            {
+                shot.Draw(gameTime);
+            }
+            bomb.Draw(gameTime);
+            base.Draw(gameTime);
+        }
+
+        public void Fire(float speed)
+        {
+            if (indicis.Count == 0)
+                return;
+            int i = indicis.First().Key;
+            indicis.Remove(i);
+            Shot s = allShots[i];
+            s.Fire(speed, CurrentAnimation == FLY_Left ? Direction.Left : Direction.Right, position);
+            shoot.Play();
+        }
+
+        public void Hit()
+        {
+            --lifePoints;
+            if (lifePoints <= 0)
+                scene.GameOver();
+        }
+
+        public override void Initilize()
+        {
+            base.Initilize();
+            CurrentAnimation = FLY_RIGHT;
+            bomb.Initilize();
+            lifePoints = scene.configuration.Player.Lifepoints;
+
+            Game1.instance.QueuLoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
+
+            foreach (var shot in allShots)
+            {
+                shot.Initilize();
+            }
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -113,7 +153,7 @@ namespace Mitgard.Resistance.Sprite
                 else if (input.Right == AbstractInput.Type.Press)
                     CurrentAnimation = TURN_RIGHT;
             }
-            movment *= SPEED;
+            movment *= scene.configuration.Player.Speed;
             if (input.Fire == AbstractInput.Type.Press && CurrentAnimation != TURN_LEFT && CurrentAnimation != TURN_RIGHT)
             {
                 Fire(movment.X);
@@ -133,79 +173,45 @@ namespace Mitgard.Resistance.Sprite
 
         }
 
-        public override void Draw(GameTime gameTime)
+        public class Bomb : Sprite
         {
-            foreach (var shot in allShots)
+
+            private float destructivXRangeWithScaleOne;
+            private float destructivYRangeWithScaleOne;
+
+            public override Texture2D Image
             {
-                shot.Draw(gameTime);
-            }
-            bomb.Draw(gameTime);
-            base.Draw(gameTime);
-        }
-
-        public void Fire(float speed)
-        {
-            if (indicis.Count == 0)
-                return;
-            int i = indicis.First().Key;
-            indicis.Remove(i);
-            Shot s = allShots[i];
-            s.Fire(speed, CurrentAnimation == FLY_Left ? Direction.Left : Direction.Right, position);
-            shoot.Play();
-        }
-
-        public override void Initilize()
-        {
-            base.Initilize();
-            CurrentAnimation = FLY_RIGHT;
-            bomb.Initilize();
-            Game1.instance.QueuLoadContent(@"Sound\shot2", (SoundEffect s) => shoot = s);
-
-            foreach (var shot in allShots)
-            {
-                shot.Initilize();
-            }
-        }
-
-        public static readonly Animation FLY_RIGHT = new Animation(Point.Zero, 1, 1, 48, 24);
-        public static readonly Animation FLY_Left = new Animation(new Point(0, 3 * 24), 1, 1, 48, 24);
-        public static readonly Animation TURN_RIGHT = new Animation(new Point(0, 3 * 24), 6, 3, 48, 24);
-        public static readonly Animation TURN_LEFT = new Animation(Point.Zero, 6, 3, 48, 24);
-
-        public class Shot : Sprite
-        {
-
-            private static Microsoft.Xna.Framework.Graphics.Texture2D image;
-
-            public override Microsoft.Xna.Framework.Graphics.Texture2D Image
-            {
-                get { return image; }
-                set { image = value; }
+                get
+                {
+                    return tex;
+                }
+                set
+                {
+                    tex = value;
+                }
             }
 
-            public const float SPEED = 720;
-            public const double SHOT_LIFETIME = 2;
-            public Direction direction;
-            private double lifetime;
-            public float speed;
+            double sequence = 0;
+            static Texture2D tex;
 
-            double frameTime;
-
-            const double animationSpeed = 0.05f;
-
-
-            Player player;
-
-            private readonly Animation CREATE = new Animation(Point.Zero, 4, 2, 160, 8);
-            private readonly Animation FLY = new Animation(new Point(0, 8), 1, 1, 160, 8);
-            private readonly Animation DIE = new Animation(new Point(0, 8), 4, 2, 160, 8);
-
-
-            public Shot(Player player)
-                : base(@"Animation\FireBlastTiles", player.scene)
+            public Bomb(GameScene scene)
+                : base(@"Animation\BombExplosion", scene)
             {
-                this.player = player;
-                CurrentAnimation = FLY;
+                CurrentAnimation = new Animation(Point.Zero, 1, 1, 475, 474);
+            }
+
+            protected override void AnimationChanged()
+            {
+                base.AnimationChanged();
+                destructivXRangeWithScaleOne = CurrentAnimation.frameWidth / 2;
+                destructivYRangeWithScaleOne = CurrentAnimation.frameHeight / 2;
+            }
+
+            public void boom()
+            {
+                sequence = 0;
+                position = scene.player.position;
+                Visible = true;
             }
 
             public override void Initilize()
@@ -214,10 +220,92 @@ namespace Mitgard.Resistance.Sprite
                 Visible = false;
             }
 
+            public bool PointWithinExplosion(Vector2 pointposition)
+            {
+                Vector2 realativPosition = pointposition - position;
+                if (destructivXRangeWithScaleOne != destructivYRangeWithScaleOne)
+                    realativPosition *= new Vector2(1, destructivXRangeWithScaleOne / destructivYRangeWithScaleOne);
+                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * destructivXRangeWithScaleOne * scale * scale;
+            }
+
+            public override void Update(GameTime gameTime)
+            {
+                if (!Visible)
+                    return;
+                scale = (float)sequence;
+                if (scale >= 2.0f)
+                {
+                    Visible = false;
+                    return;
+                }
+
+                if (scale > 1f)
+                    color = new Color(2f - scale, 2f - scale, 2f - scale, 2f - scale);
+                else
+                    color = Color.White;
+
+                foreach (var enemy in scene.notDestroyedEnemys)
+                {
+                    if (PointWithinExplosion(enemy.position))
+                        enemy.Destroy();
+                }
+
+
+                sequence += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        public class Shot : Sprite
+        {
+
+            const double animationSpeed = 0.05f;
+            public const double SHOT_LIFETIME = 2;
+            public const float SPEED = 720;
+            private readonly Animation CREATE = new Animation(Point.Zero, 4, 2, 160, 8);
+            private readonly Animation DIE = new Animation(new Point(0, 8), 4, 2, 160, 8);
+            public Direction direction;
+            private readonly Animation FLY = new Animation(new Point(0, 8), 1, 1, 160, 8);
+            double frameTime;
+
+            private static Microsoft.Xna.Framework.Graphics.Texture2D image;
+            public override Microsoft.Xna.Framework.Graphics.Texture2D Image
+            {
+                get { return image; }
+                set { image = value; }
+            }
+
+            private double lifetime;
+            Player player;
+            public float speed;
+
+            public Shot(Player player)
+                : base(@"Animation\FireBlastTiles", player.scene)
+            {
+                this.player = player;
+                CurrentAnimation = FLY;
+            }
+
             protected override void AnimationChanged()
             {
                 //Auskommentiert, da die Collision rectangls zu sehr mit der Grafik verknüpft sind
                 //base.AnimationChanged();
+            }
+
+            private void Die()
+            {
+                CurrentAnimation = DIE;
+                currentAnimationFrame = 0;
+                //int frame = getFrame();
+                //int seqLength = getFrameSequenceLength();
+                //setFrameSequence(StaticFields.getSpriteDesinger().MainFireBlastDie);
+                //setFrame(Math.max(0, getFrameSequenceLength() - (seqLength - frame)));
+                //lifetime = Integer.MAX_VALUE;
+            }
+
+            public override void Draw(GameTime gameTime)
+            {
+                if (Visible)
+                    base.Draw(gameTime);
             }
 
             public void Fire(float playerSpeed, Direction playerDirection, Vector2 position)
@@ -245,20 +333,11 @@ namespace Mitgard.Resistance.Sprite
                 CurrentAnimation = CREATE;
             }
 
-
-
-
-            private void Die()
+            public override void Initilize()
             {
-                CurrentAnimation = DIE;
-                currentAnimationFrame = 0;
-                //int frame = getFrame();
-                //int seqLength = getFrameSequenceLength();
-                //setFrameSequence(StaticFields.getSpriteDesinger().MainFireBlastDie);
-                //setFrame(Math.max(0, getFrameSequenceLength() - (seqLength - frame)));
-                //lifetime = Integer.MAX_VALUE;
+                base.Initilize();
+                Visible = false;
             }
-
 
             public override void Update(GameTime gameTime)
             {
@@ -333,112 +412,6 @@ namespace Mitgard.Resistance.Sprite
                     }
                 }
             }
-
-
-            public override void Draw(GameTime gameTime)
-            {
-                if (Visible)
-                    base.Draw(gameTime);
-            }
-
-        }
-
-
-
-        public void Hit()
-        {
-            --lifePoints;
-            if (lifePoints <= 0)
-                scene.GameOver();
-        }
-
-        public class Bomb : Sprite
-        {
-
-            private float destructivXRangeWithScaleOne;
-            private float destructivYRangeWithScaleOne;
-
-            static Texture2D tex;
-
-
-            public override Texture2D Image
-            {
-                get
-                {
-                    return tex;
-                }
-                set
-                {
-                    tex = value;
-                }
-            }
-
-            protected override void AnimationChanged()
-            {
-                base.AnimationChanged();
-                destructivXRangeWithScaleOne = CurrentAnimation.frameWidth / 2;
-                destructivYRangeWithScaleOne = CurrentAnimation.frameHeight / 2;
-            }
-
-
-            public override void Update(GameTime gameTime)
-            {
-                if (!Visible)
-                    return;
-                scale = (float)sequence;
-                if (scale >= 2.0f)
-                {
-                    Visible = false;
-                    return;
-                }
-
-                if (scale > 1f)
-                    color = new Color(2f - scale, 2f - scale, 2f - scale, 2f - scale);
-                else
-                    color = Color.White;
-
-                foreach (var enemy in scene.notDestroyedEnemys)
-                {
-                    if (PointWithinExplosion(enemy.position))
-                        enemy.Destroy();
-                }
-
-
-                sequence += gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            public bool PointWithinExplosion(Vector2 pointposition)
-            {
-                Vector2 realativPosition = pointposition - position;
-                if (destructivXRangeWithScaleOne != destructivYRangeWithScaleOne)
-                    realativPosition *= new Vector2(1, destructivXRangeWithScaleOne / destructivYRangeWithScaleOne);
-                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * destructivXRangeWithScaleOne * scale * scale;
-            }
-
-            public override void Initilize()
-            {
-                base.Initilize();
-                Visible = false;
-            }
-
-
-            double sequence = 0;
-
-            public Bomb(GameScene scene)
-                : base(@"Animation\BombExplosion", scene)
-            {
-                CurrentAnimation = new Animation(Point.Zero, 1, 1, 475, 474);
-            }
-
-            public void boom()
-            {
-                sequence = 0;
-                position = scene.player.position;
-                Visible = true;
-            }
-
-
-
         }
     }
 }

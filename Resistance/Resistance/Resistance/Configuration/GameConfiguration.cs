@@ -14,13 +14,14 @@ namespace Mitgard.Resistance.Configuration
         private int noCollector;
         private int noMine;
         private bool enemyTargetting;
+        private PlayerConfiguration player = new PlayerConfiguration();
 
 
         public int WorldWidth { get { return 4000; } }
         public int WorldHeight { get { return 800; } }
 
 
-       
+
 
         public float EnemyShotSpeed
         {
@@ -64,7 +65,39 @@ namespace Mitgard.Resistance.Configuration
             set { enemyTargetting = value; }
         }
 
+        public PlayerConfiguration Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
 
+        public class PlayerConfiguration
+        {
+            private int shotCount = 10;
+            private float speed = 64f;
+            private int lifepoints = 5;
+            private PlayerConfiguration player;
+
+            public PlayerConfiguration()
+            {
+            }
+
+            public int ShotCount
+            {
+                get { return shotCount; }
+                set { shotCount = value; }
+            }
+            public float Speed
+            {
+                get { return speed; }
+                set { speed = value; }
+            }
+            public int Lifepoints
+            {
+                get { return lifepoints; }
+                set { lifepoints = value; }
+            }
+        }
 
     }
 }
