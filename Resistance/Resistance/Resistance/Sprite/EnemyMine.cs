@@ -24,7 +24,6 @@ namespace Mitgard.Resistance.Sprite
 
         double frameTime;
         const double animationSpeed = 0.05f;
-        const float SPEED = 80;
 
 
         private int direction;
@@ -40,7 +39,7 @@ namespace Mitgard.Resistance.Sprite
         public EnemyMine(GameScene scene)
             : base(@"Animation\Enemy3", scene)
         {
-            collisonRec = new Rectangle(-16,-16,32,32);
+            collisonRec = new Rectangle(-16, -16, 32, 32);
         }
 
         public override void Initilize()
@@ -48,7 +47,7 @@ namespace Mitgard.Resistance.Sprite
             base.Initilize();
             CurrentAnimation = FLY;
             origion = new Vector2(16, 16);
-        
+
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -131,7 +130,7 @@ namespace Mitgard.Resistance.Sprite
                 movment.Normalize();
             }
 
-            position += movment * SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position += movment * scene.configuration.Mine.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (ColideWith(player))
             {

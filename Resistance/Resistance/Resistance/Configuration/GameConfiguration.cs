@@ -17,6 +17,10 @@ namespace Mitgard.Resistance.Configuration
         private bool enemyTargetting;
         private PlayerConfiguration player = new PlayerConfiguration();
         private int test;
+        private EnemyConfiguration collector = new EnemyConfiguration();
+        private EnemyPredatorConfiguration predator = new EnemyPredatorConfiguration();
+        private EnemyConfiguration mine;
+        private EnemyConfiguration destroyer;
 
 
         public int WorldWidth { get { return 4000; } }
@@ -73,6 +77,38 @@ namespace Mitgard.Resistance.Configuration
             set { player = value; }
         }
 
+        public EnemyConfiguration Collector
+        {
+            get { return collector; }
+            set { collector = value; }
+        }
+
+        public EnemyPredatorConfiguration Predator
+        {
+            get { return predator; }
+            set { predator = value; }
+        }
+
+        public EnemyConfiguration Mine
+        {
+            get { return mine; }
+            set
+            {
+                mine = value;
+                mine.Speed = 80;
+            }
+        }
+
+        public EnemyConfiguration Destroyer
+        {
+            get { return destroyer; }
+            set
+            {
+                destroyer = value;
+                destroyer.Speed = 260f;
+            }
+        }
+
         public class PlayerConfiguration
         {
             private int shotCount = 10;
@@ -114,9 +150,35 @@ namespace Mitgard.Resistance.Configuration
             }
         }
 
+        public class EnemyConfiguration
+        {
+            private float speed = 16f;
 
+            public EnemyConfiguration()
+            {
+            }
 
+            public float Speed
+            {
+                get { return speed; }
+                set { speed = value; }
+            }
+        }
 
+        public class EnemyPredatorConfiguration : EnemyConfiguration
+        {
+            private int numberOfShots = 3;
+
+            public EnemyPredatorConfiguration()
+            {
+            }
+
+            public int NumberOfShots
+            {
+                get { return numberOfShots; }
+                set { numberOfShots = value; }
+            }
+        }
 
     }
 }

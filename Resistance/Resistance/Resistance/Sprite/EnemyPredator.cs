@@ -38,7 +38,6 @@ namespace Mitgard.Resistance.Sprite
         System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
 
 
-        private const int MAX_NUMBER_OF_SHOTS = 3;
 
 
         double frameTime;
@@ -55,8 +54,8 @@ namespace Mitgard.Resistance.Sprite
             origion = new Microsoft.Xna.Framework.Vector2(16, 16);
             collisonRec = new Rectangle(-16, -16, 32, 32);
             CurrentAnimation = FLY;
-            shots = new Shot[MAX_NUMBER_OF_SHOTS];
-            for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
+            shots = new Shot[scene.configuration.Predator.NumberOfShots];
+            for (int i = 0; i < scene.configuration.Predator.NumberOfShots; i++)
             {
                 shots[i] = new Shot(scene);
                 scene.allEnemyShots.Add(shots[i]);
@@ -75,7 +74,7 @@ namespace Mitgard.Resistance.Sprite
 
 
 
-            for (int i = 0; i < MAX_NUMBER_OF_SHOTS; i++)
+            for (int i = 0; i < scene.configuration.Predator.NumberOfShots; i++)
             {
                 shots[i].Initilize();
             }

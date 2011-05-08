@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 // TODO: replace these with the processor input and output types.
 using TInput = System.String;
 using TOutput = System.String;
+using System.Xml.Linq;
+using Mitgard.Resistance.Configuration;
 
 namespace ResistanceContentPipelineExtension
 {
@@ -24,13 +26,20 @@ namespace ResistanceContentPipelineExtension
     /// TODO: change the ContentProcessor attribute to specify the correct
     /// display name for this processor.
     /// </summary>
-    [ContentProcessor(DisplayName = "ResistanceContentPipelineExtension.ContentProcessor1")]
-    public class ContentProcessor1 : ContentProcessor<TInput, TOutput>
+    [ContentProcessor(DisplayName = "Resistance Configuration Processor")]
+    public class ContentProcessor1 : ContentProcessor<XDocument, GameConfiguration>
     {
-        public override TOutput Process(TInput input, ContentProcessorContext context)
+        public override GameConfiguration Process(XDocument input, ContentProcessorContext context)
         {
-            // TODO: process the input object, and return the modified data.
-            throw new NotImplementedException();
+
+
+            GameConfiguration gameConfiguration = new GameConfiguration();
+
+
+
+
+            return gameConfiguration;
+
         }
     }
 }

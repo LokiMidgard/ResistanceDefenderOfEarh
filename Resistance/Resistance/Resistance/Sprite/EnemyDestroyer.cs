@@ -131,7 +131,6 @@ namespace Mitgard.Resistance.Sprite
 
         double frameTime;
         const double animationSpeed = 0.05f;
-        const float SPEED = 260;
 
         public EnemyDestroyer(GameScene scene)
             : base(@"Animation\Enemy4", scene)
@@ -209,7 +208,7 @@ namespace Mitgard.Resistance.Sprite
                     this.Destroy(true);
                 }
 
-                position += movment * SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position += movment * scene.configuration.Destroyer.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 return;
             }
             //        if (getY() > 0 && (getX() - StaticFields.currentLevel.getPlayer().getX()) * (getX() - StaticFields.currentLevel.getPlayer().getX()) + (getY() - StaticFields.currentLevel.getPlayer().getY()) * (getY() - StaticFields.currentLevel.getPlayer().getY()) < 500 * 500) {
@@ -231,11 +230,11 @@ namespace Mitgard.Resistance.Sprite
 
             Vector2 movmentDirection = targetPosition - position;
 
-            if (movmentDirection.Length() > SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds)
+            if (movmentDirection.Length() > scene.configuration.Destroyer.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds)
             {
                 movmentDirection.Normalize();
                 movment += movmentDirection;
-                position += movment * SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position += movment * scene.configuration.Destroyer.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {

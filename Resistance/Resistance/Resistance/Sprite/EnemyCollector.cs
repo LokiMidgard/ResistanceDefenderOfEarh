@@ -42,7 +42,6 @@ namespace Mitgard.Resistance.Sprite
 
         double frameTime;
         const double animationSpeed = 0.05f;
-        const float SPEED = 16;
 
         protected override void AnimationChanged()
         {
@@ -98,7 +97,7 @@ namespace Mitgard.Resistance.Sprite
                 }
             }
 
-            position += movement * SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position += movement * scene.configuration.Collector.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
             frameTime += gameTime.ElapsedGameTime.TotalSeconds;
