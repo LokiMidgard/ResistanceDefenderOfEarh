@@ -31,7 +31,7 @@ namespace Mitgard.Resistance.Sprite
 
 
         private static Microsoft.Xna.Framework.Graphics.Texture2D image;
-        private int lifePoints;
+        public int lifePoints;
         public override Microsoft.Xna.Framework.Graphics.Texture2D Image
         {
             get { return image; }
@@ -160,7 +160,7 @@ namespace Mitgard.Resistance.Sprite
             }
             if (input.Bomb == AbstractInput.Type.Press && !bomb.Visible && CurrentAnimation != TURN_LEFT && CurrentAnimation != TURN_RIGHT)
             {
-                bomb.boom();
+                bomb.Boom();
             }
             position += movment * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -176,8 +176,10 @@ namespace Mitgard.Resistance.Sprite
         public class Bomb : Sprite
         {
 
-            private float destructivXRangeWithScaleOne;
-            private float destructivYRangeWithScaleOne;
+            private Vector2 destructivRangeWithScaleOne;
+
+
+            private Vector2 scalePerSeccond;
 
             public override Texture2D Image
             {
@@ -191,8 +193,8 @@ namespace Mitgard.Resistance.Sprite
                 }
             }
 
-            double sequence = 0;
             static Texture2D tex;
+            private Vector2 scaleWithMaxRadius;
 
             public Bomb(GameScene scene)
                 : base(@"Animation\BombExplosion", scene)
@@ -203,15 +205,16 @@ namespace Mitgard.Resistance.Sprite
             protected override void AnimationChanged()
             {
                 base.AnimationChanged();
-                destructivXRangeWithScaleOne = CurrentAnimation.frameWidth / 2;
-                destructivYRangeWithScaleOne = CurrentAnimation.frameHeight / 2;
+                destructivRangeWithScaleOne = new Vector2(CurrentAnimation.frameWidth / 2, CurrentAnimation.frameHeight / 2);
+                scaleWithMaxRadius = new Vector2(scene.configuration.Player.MaxBombSize.X / destructivRangeWithScaleOne.X, scene.configuration.Player.MaxBombSize.Y / destructivRangeWithScaleOne.Y);
+                scalePerSeccond = scaleWithMaxRadius / scene.configuration.Player.TimeTillMaxBombSize;
             }
 
-            public void boom()
+            public void Boom()
             {
-                sequence = 0;
                 position = scene.player.position;
                 Visible = true;
+                scale = Vector2.Zero;
             }
 
             public override void Initilize()
@@ -223,26 +226,27 @@ namespace Mitgard.Resistance.Sprite
             public bool PointWithinExplosion(Vector2 pointposition)
             {
                 Vector2 realativPosition = pointposition - position;
-                if (destructivXRangeWithScaleOne != destructivYRangeWithScaleOne)
-                    realativPosition *= new Vector2(1, destructivXRangeWithScaleOne / destructivYRangeWithScaleOne);
-                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * destructivXRangeWithScaleOne * scale * scale;
+
+                Vector2 radians = destructivRangeWithScaleOne * scale;
+
+                if (radians.X != radians.Y)
+                    realativPosition *= new Vector2(1, radians.X / radians.Y);
+                return realativPosition.LengthSquared() <= radians.X * radians.X;
             }
 
             public override void Update(GameTime gameTime)
             {
                 if (!Visible)
                     return;
-                scale = (float)sequence;
-                if (scale >= 2.0f)
+                if (scale.X >= scaleWithMaxRadius.X && scale.X >= scaleWithMaxRadius.X)
                 {
                     Visible = false;
                     return;
                 }
 
-                if (scale > 1f)
-                    color = new Color(2f - scale, 2f - scale, 2f - scale, 2f - scale);
-                else
-                    color = Color.White;
+                float transparentPercent = 1f - scale.X / scaleWithMaxRadius.X;
+
+                color = new Color(transparentPercent, transparentPercent, transparentPercent, transparentPercent);
 
                 foreach (var enemy in scene.notDestroyedEnemys)
                 {
@@ -251,7 +255,7 @@ namespace Mitgard.Resistance.Sprite
                 }
 
 
-                sequence += gameTime.ElapsedGameTime.TotalSeconds;
+                scale += scalePerSeccond * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
 
@@ -295,11 +299,6 @@ namespace Mitgard.Resistance.Sprite
             {
                 CurrentAnimation = DIE;
                 currentAnimationFrame = 0;
-                //int frame = getFrame();
-                //int seqLength = getFrameSequenceLength();
-                //setFrameSequence(StaticFields.getSpriteDesinger().MainFireBlastDie);
-                //setFrame(Math.max(0, getFrameSequenceLength() - (seqLength - frame)));
-                //lifetime = Integer.MAX_VALUE;
             }
 
             public override void Draw(GameTime gameTime)

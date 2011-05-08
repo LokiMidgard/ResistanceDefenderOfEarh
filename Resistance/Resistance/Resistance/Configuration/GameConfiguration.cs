@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Mitgard.Resistance.Configuration
 {
@@ -15,6 +16,7 @@ namespace Mitgard.Resistance.Configuration
         private int noMine;
         private bool enemyTargetting;
         private PlayerConfiguration player = new PlayerConfiguration();
+        private int test;
 
 
         public int WorldWidth { get { return 4000; } }
@@ -76,7 +78,8 @@ namespace Mitgard.Resistance.Configuration
             private int shotCount = 10;
             private float speed = 64f;
             private int lifepoints = 5;
-            private PlayerConfiguration player;
+            private Vector2 maxBombSize = new Vector2(500);
+            private float timeTillMaxBombSize = 2f;
 
             public PlayerConfiguration()
             {
@@ -97,7 +100,23 @@ namespace Mitgard.Resistance.Configuration
                 get { return lifepoints; }
                 set { lifepoints = value; }
             }
+
+            public Vector2 MaxBombSize
+            {
+                get { return maxBombSize; }
+                set { maxBombSize = value; }
+            }
+
+            public float TimeTillMaxBombSize
+            {
+                get { return timeTillMaxBombSize; }
+                set { timeTillMaxBombSize = value; }
+            }
         }
+
+
+
+
 
     }
 }

@@ -38,7 +38,7 @@ namespace Mitgard.Resistance.Sprite
         {
 
             maxLive = 300;
-            live = scene.player.lifePoints * 300 / 5;
+            live = scene.player.lifePoints * 300 / scene.configuration.Player.Lifepoints;
             score = scene.score.ToString();
             Vector2 scalirungsvector = new Vector2((float)radarWidth / (float)scene.configuration.WorldWidth, (float)rardarHeight / (float)scene.configuration.WorldHeight);
             radarDots.Clear();

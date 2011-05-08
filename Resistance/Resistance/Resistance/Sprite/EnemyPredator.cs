@@ -178,7 +178,7 @@ namespace Mitgard.Resistance.Sprite
 
             Player player = scene.player;
 
-            if (scene.enemyTargetting)
+            if (scene.configuration.EnemyTargetting)
             {
                 for (float i = 0; i < 6f; i += 0.3f)
                 {

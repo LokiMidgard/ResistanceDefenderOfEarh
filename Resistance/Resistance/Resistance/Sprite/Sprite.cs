@@ -82,8 +82,8 @@ namespace Mitgard.Resistance.Sprite
         }
 
         public event EventHandler<EventArgs> VisibleChanged;
-        public float scale = 1f;
-        public  Color color;
+        public Vector2 scale = Vector2.One;
+        public Color color;
 
         public abstract void Update(GameTime gameTime);
 
