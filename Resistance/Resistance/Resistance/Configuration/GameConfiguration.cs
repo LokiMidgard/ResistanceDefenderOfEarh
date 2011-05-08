@@ -13,6 +13,7 @@ namespace Mitgard.Resistance.Configuration
         private int noPredator;
         private int noCollector;
         private int noMine;
+        private bool enemyTargetting;
 
 
         public int WorldWidth { get { return 4000; } }
@@ -55,6 +56,12 @@ namespace Mitgard.Resistance.Configuration
         {
             get { return noMine; }
             set { noMine = value; }
+        }
+
+        public bool EnemyTargetting
+        {
+            get { return enemyTargetting; }
+            set { enemyTargetting = value; }
         }
 
 

@@ -34,6 +34,8 @@ namespace Mitgard.Resistance.Scene
 
         public GameInput input;
 
+        public Dificulty difficulty;
+        
         public Player player;
 
         public EnemyDestroyer destroyer;
@@ -42,10 +44,8 @@ namespace Mitgard.Resistance.Scene
         public List<AbstractEnemy> allEnemys = new List<AbstractEnemy>();
         public List<Human> allHumans = new List<Human>();
         public List<EnemyPredator.Shot> allEnemyShots = new List<EnemyPredator.Shot>();
-        public int score;
-        public Dificulty difficulty;
-        public bool enemyTargetting = false;
 
+        public int score;
         public int scoreBeginLevel;
         private double bosCountdown;
         private double destroyerTime;
@@ -64,7 +64,7 @@ namespace Mitgard.Resistance.Scene
             PrepareGame();
 
             configuration.EnemyShotSpeed = t.EnemyShotSpeed;
-            enemyTargetting = t.enemyTargetting;
+            configuration.EnemyTargetting = t.enemyTargetting;
             configuration.Level = t.level;
             configuration.NoCollector = t.noCollector;
             configuration.NoHumans = t.noHumans;
@@ -104,7 +104,7 @@ namespace Mitgard.Resistance.Scene
                     configuration.NoPredator = 0;
                     configuration.NoCollector = 5;
                     configuration.NoMine = 0;
-                    enemyTargetting = false;
+                    configuration.EnemyTargetting = false;
                     configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
                     break;
                 case Dificulty.Medium:
@@ -112,7 +112,7 @@ namespace Mitgard.Resistance.Scene
                     configuration.NoPredator = 10;
                     configuration.NoCollector = 10;
                     configuration.NoMine = 0;
-                    enemyTargetting = false;
+                    configuration.EnemyTargetting = false;
                     configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
                     break;
                 case Dificulty.Hard:
@@ -120,7 +120,7 @@ namespace Mitgard.Resistance.Scene
                     configuration.NoPredator = 15;
                     configuration.NoCollector = 10;
                     configuration.NoMine = 0;
-                    enemyTargetting = true;
+                    configuration.EnemyTargetting = true;
                     configuration.EnemyShotSpeed = SHOTSPEED_FAST;
                     break;
             }
@@ -368,7 +368,7 @@ namespace Mitgard.Resistance.Scene
                     configuration.NoCollector += (Game1.random.Next(3) + 2);
                     if (configuration.Level > 9)
                     {
-                        enemyTargetting = true;
+                        configuration.EnemyTargetting = true;
                     }
                     if (configuration.Level > 3)
                     {
@@ -390,7 +390,7 @@ namespace Mitgard.Resistance.Scene
                     configuration.NoCollector += (Game1.random.Next(2) + 3);
                     if (configuration.Level > 5)
                     {
-                        enemyTargetting = true;
+                        configuration.EnemyTargetting = true;
                     }
                     if (configuration.Level > 2)
                     {
@@ -476,7 +476,7 @@ namespace Mitgard.Resistance.Scene
             t.level = configuration.Level;
             t.difficulty = difficulty;
             t.EnemyShotSpeed = configuration.EnemyShotSpeed;
-            t.enemyTargetting = enemyTargetting;
+            t.enemyTargetting = configuration.EnemyTargetting;
             t.noCollector = configuration.NoCollector;
             t.noHumans = configuration.NoHumans;
             t.noMine = configuration.NoMine;
