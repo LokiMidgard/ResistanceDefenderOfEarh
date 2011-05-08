@@ -385,11 +385,17 @@ namespace Mitgard.Resistance.Sprite
             {
                 if (!Visible)
                     return;
+                scale = (float)sequence;
                 if (scale >= 2.0f)
                 {
                     Visible = false;
                     return;
                 }
+
+                if (scale > 1f)
+                    color = new Color(2f - scale, 2f - scale, 2f - scale, 2f - scale);
+                else
+                    color = Color.White;
 
                 foreach (var enemy in scene.notDestroyedEnemys)
                 {
@@ -397,7 +403,6 @@ namespace Mitgard.Resistance.Sprite
                         enemy.Destroy();
                 }
 
-                scale = (float)sequence;
 
                 sequence += gameTime.ElapsedGameTime.TotalSeconds;
             }
@@ -407,15 +412,14 @@ namespace Mitgard.Resistance.Sprite
                 Vector2 realativPosition = pointposition - position;
                 if (destructivXRangeWithScaleOne != destructivYRangeWithScaleOne)
                     realativPosition *= new Vector2(1, destructivXRangeWithScaleOne / destructivYRangeWithScaleOne);
-                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * scale;
+                return realativPosition.LengthSquared() <= destructivXRangeWithScaleOne * destructivXRangeWithScaleOne * scale * scale;
             }
 
-
-            public override void Draw(GameTime gameTime)
+            public override void Initilize()
             {
-                base.Draw(gameTime);
+                base.Initilize();
+                Visible = false;
             }
-
 
 
             double sequence = 0;

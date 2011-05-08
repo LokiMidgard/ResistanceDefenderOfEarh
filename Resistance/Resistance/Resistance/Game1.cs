@@ -33,6 +33,7 @@ namespace Midgard.Resistance
 
         public Texture2D clearStdBackground;
 
+        private bool init;
 
         public Queue<Action> actionList = new Queue<Action>();
 
@@ -97,6 +98,8 @@ namespace Midgard.Resistance
             this.IsFixedTimeStep = false;
 
             base.Initialize();
+
+            init = true;
         }
 
         /// <summary>
@@ -128,6 +131,9 @@ namespace Midgard.Resistance
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //we dont want to paint before we init;
+            if (!init)
+                return;
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -159,6 +165,9 @@ namespace Midgard.Resistance
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //we dont want to paint before we init;
+            if (!init)
+                return;
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
 

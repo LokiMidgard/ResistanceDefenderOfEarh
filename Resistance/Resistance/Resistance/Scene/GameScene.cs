@@ -15,8 +15,6 @@ namespace Mitgard.Resistance.Scene
     public class GameScene : IScene
     {
 
-        //public const int configuration.WorldWidth = 4000;
-        //public const int configuration.WorldHeight = 480;
 
         public const int VIEWPORT_WIDTH = 800;
         public const int VIEWPORT_HEIGHT = 480;
@@ -133,6 +131,7 @@ namespace Mitgard.Resistance.Scene
                     break;
             }
 
+           
            
         }
 

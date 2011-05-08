@@ -58,6 +58,8 @@ namespace Mitgard.Resistance.Sprite
 
         public virtual void Destroy()
         {
+            if (Dead)
+                return;
             Dead = true;
 
             CurrentAnimation = EXPLOAD;
