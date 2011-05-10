@@ -364,8 +364,9 @@
   <ItemGroup>
     <Compile Include="Configuration\GameConfig.xml">
       <Name>GameConfig</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
+      <Importer>XDocumentImporter</Importer>
+      <Processor>ContentProcessor1</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -380,6 +381,12 @@
       <SubType>Designer</SubType>
       <Name>ConfigurationSchema</Name>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ResistanceContentPipelineExtension\ResistanceContentPipelineExtension.csproj">
+      <Project>{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}</Project>
+      <Name>ResistanceContentPipelineExtension</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

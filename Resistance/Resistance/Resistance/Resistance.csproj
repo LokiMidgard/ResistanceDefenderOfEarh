@@ -133,6 +133,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ResistanceContentPipelineExtension\ResistanceContentPipelineExtension.csproj">
+      <Project>{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}</Project>
+      <Name>ResistanceContentPipelineExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ResistanceContent\ResistanceContent.contentproj">
       <Name>ResistanceContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>

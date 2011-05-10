@@ -54,15 +54,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\GameConfiguration.cs" />
     <Compile Include="ContentImporter1.cs" />
     <Compile Include="ContentProcessor1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Resistance\Resistance\Resistance.csproj">
-      <Project>{AAFF7B39-CE21-46A6-A47F-E5EA3BE4C12D}</Project>
-      <Name>Resistance</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfigurationSchema.xsd">
