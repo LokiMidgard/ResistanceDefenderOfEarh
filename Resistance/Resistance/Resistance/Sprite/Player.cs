@@ -50,7 +50,7 @@ namespace Mitgard.Resistance.Sprite
 
         System.Collections.Generic.Dictionary<int, bool> indicis = new Dictionary<int, bool>();
         public Shot[] allShots;
-        Bomb bomb;
+       public Bomb bomb;
         double frameTime;
         public Vector2 movment;
 

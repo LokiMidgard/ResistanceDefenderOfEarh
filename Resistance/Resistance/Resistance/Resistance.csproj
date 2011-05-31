@@ -91,7 +91,7 @@
   <ItemGroup>
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="Components\IDrawableComponent.cs" />
-    <Compile Include="Configuration\GameConfiguration.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Input\AbstractInput.cs" />
     <Compile Include="Input\GameInput.cs" />
     <Compile Include="LevelBackground\DesertBackground.cs" />
@@ -133,9 +133,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ResistanceContentPipelineExtension\ResistanceContentPipelineExtension.csproj">
-      <Project>{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}</Project>
-      <Name>ResistanceContentPipelineExtension</Name>
+    <ProjectReference Include="..\..\ConfigurationLibary\ConfigurationLibary.csproj">
+      <Project>{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}</Project>
+      <Name>ConfigurationLibary</Name>
     </ProjectReference>
     <ProjectReference Include="..\ResistanceContent\ResistanceContent.contentproj">
       <Name>ResistanceContent %28Content%29</Name>
@@ -143,6 +143,7 @@
       <Project>{53CED27A-2A91-41AD-A7C7-4AF9B47E7B3F}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

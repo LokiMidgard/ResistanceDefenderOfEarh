@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoCode", "AutoCode", "{C8
 		AutoCode\license.autox = AutoCode\license.autox
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationLibary", "ConfigurationLibary\ConfigurationLibary.csproj", "{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 4
@@ -73,6 +75,16 @@ Global
 		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|Windows Phone.Build.0 = Debug|x86
 		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|x86.ActiveCfg = Debug|x86
 		{A39BD8B6-EAD8-49B3-BBE7-F03C0D45B673}.Release|x86.Build.0 = Debug|x86
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Debug|Mixed Platforms.ActiveCfg = Debug|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Debug|Mixed Platforms.Build.0 = Debug|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Debug|x86.ActiveCfg = Debug|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Release|Mixed Platforms.Build.0 = Release|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{F2F5F5D5-9100-45A6-8DA6-FCB19133CE0E}.Release|x86.ActiveCfg = Release|Windows Phone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

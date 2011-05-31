@@ -49,7 +49,7 @@ namespace Mitgard.Resistance.Scene
         public const float SHOTSPEED_SLOW = 24f;
 
 
-        public GameConfiguration configuration = new GameConfiguration();
+        public GameConfiguration configuration;// = new GameConfiguration();
 
         DesertBackground background;
 
@@ -60,7 +60,7 @@ namespace Mitgard.Resistance.Scene
         public GameInput input;
 
         public Dificulty difficulty;
-        
+
         public Player player;
 
         public EnemyDestroyer destroyer;
@@ -78,6 +78,7 @@ namespace Mitgard.Resistance.Scene
         public GameScene(Tombstone t)
         {
 
+            PrepareGame();
 
             this.difficulty = t.difficulty;
             player = new Player(this);
@@ -86,7 +87,6 @@ namespace Mitgard.Resistance.Scene
             background = new DesertBackground(this);
             hud = new Hud(this);
 
-            PrepareGame();
 
             configuration.EnemyShotSpeed = t.EnemyShotSpeed;
             configuration.EnemyTargetting = t.enemyTargetting;
@@ -106,13 +106,13 @@ namespace Mitgard.Resistance.Scene
 
         public GameScene(Dificulty dificulty)
         {
+            PrepareGame();
             this.difficulty = dificulty;
             player = new Player(this);
             input = new GameInput();
 
             background = new DesertBackground(this);
             hud = new Hud(this);
-            PrepareGame();
             destroyer = new EnemyDestroyer(this);
             CreateNewEnemys(false);
 
@@ -122,35 +122,35 @@ namespace Mitgard.Resistance.Scene
         private void PrepareGame()
         {
 
-            switch (this.difficulty)
-            {
-                case Dificulty.Easy:
-                    configuration.NoHumans = 20;
-                    configuration.NoPredator = 0;
-                    configuration.NoCollector = 5;
-                    configuration.NoMine = 0;
-                    configuration.EnemyTargetting = false;
-                    configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
-                    break;
-                case Dificulty.Medium:
-                    configuration.NoHumans = 15;
-                    configuration.NoPredator = 10;
-                    configuration.NoCollector = 10;
-                    configuration.NoMine = 0;
-                    configuration.EnemyTargetting = false;
-                    configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
-                    break;
-                case Dificulty.Hard:
-                    configuration.NoHumans = 10;
-                    configuration.NoPredator = 15;
-                    configuration.NoCollector = 10;
-                    configuration.NoMine = 0;
-                    configuration.EnemyTargetting = true;
-                    configuration.EnemyShotSpeed = SHOTSPEED_FAST;
-                    break;
-            }
+            //switch (this.difficulty)
+            //{
+            //    case Dificulty.Easy:
+            //        configuration.NoHumans = 20;
+            //        configuration.NoPredator = 0;
+            //        configuration.NoCollector = 5;
+            //        configuration.NoMine = 0;
+            //        configuration.EnemyTargetting = false;
+            //        configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
+            //        break;
+            //    case Dificulty.Medium:
+            //        configuration.NoHumans = 15;
+            //        configuration.NoPredator = 10;
+            //        configuration.NoCollector = 10;
+            //        configuration.NoMine = 0;
+            //        configuration.EnemyTargetting = false;
+            //        configuration.EnemyShotSpeed = SHOTSPEED_SLOW;
+            //        break;
+            //    case Dificulty.Hard:
+            //        configuration.NoHumans = 10;
+            //        configuration.NoPredator = 15;
+            //        configuration.NoCollector = 10;
+            //        configuration.NoMine = 0;
+            //        configuration.EnemyTargetting = true;
+            //        configuration.EnemyShotSpeed = SHOTSPEED_FAST;
+            //        break;
+            //}
 
-
+            configuration = Game1.instance.Content.Load<GameConfiguration>(@"Configuration\GameConfig");
 
         }
 
@@ -315,6 +315,14 @@ namespace Mitgard.Resistance.Scene
                 }
             }
 
+            if (player.bomb.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
+            {
+                player.bomb.position.X += configuration.WorldWidth;
+            }
+            else if (player.bomb.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
+            {
+                player.bomb.position.X -= configuration.WorldWidth;
+            }
 
             foreach (var s in player.allShots)
             {
@@ -322,14 +330,10 @@ namespace Mitgard.Resistance.Scene
                 if (s.position.X < ViewPort.X - (configuration.WorldWidth >> 1))
                 {
                     s.position.X += configuration.WorldWidth;
-
-
                 }
                 else if (s.position.X > ViewPort.X + (configuration.WorldWidth >> 1))
                 {
                     s.position.X -= configuration.WorldWidth;
-
-
                 }
             }
 
